@@ -11,6 +11,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -48,9 +49,12 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     /**
      * Constructs the {@code Simulator}.
      */
-    public Simulator() {
+    public Simulator() throws IOException {
         super("Geofence Simulator");
         setSize(400, 400);
+
+        System.out.println("Attempting to read in data");
+        DataSet ds = new DataSet("/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt");
 
         treeMap = new JMapViewerTree("Zones");
 
@@ -241,7 +245,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     /**
      * @param args Main program arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new Simulator().setVisible(true);
     }
 
