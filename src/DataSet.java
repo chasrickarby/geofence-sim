@@ -2,6 +2,8 @@
  * Created by chasrickarby on 9/19/16.
  */
 
+import org.openstreetmap.gui.jmapviewer.Coordinate;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,7 +12,7 @@ import java.util.List;
 
 public class DataSet {
 
-    public List<Location> data;
+    public List<Coordinate> data;
 
     public DataSet(String filePath) throws IOException{
 
@@ -24,7 +26,8 @@ public class DataSet {
             if(line.contains("Date (month/day/year)")){
                 continue;
             }
-            data.add(new Location(line.split("\\t")));
+            String[] curLine = line.split("\\t");
+            data.add(new Coordinate(Double.parseDouble(curLine[2]), Double.parseDouble(curLine[3])));
         }
 
         br.close();
