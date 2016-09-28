@@ -2,7 +2,6 @@
  * Created by chasrickarby on 9/19/16.
  */
 
-import javafx.util.Pair;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 import java.io.BufferedReader;
@@ -33,7 +32,7 @@ public class DataSet {
                 break;
             }
             String[] curLine = line.split("\\t");
-            data.add(new Coordinate(Double.parseDouble(curLine[2]), Double.parseDouble(curLine[3])));
+            data.add(new Coordinate(Double.parseDouble(curLine[2]), Double.parseDouble(curLine[3]), curLine[1]));
         }
 
         br.close();

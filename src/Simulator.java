@@ -1,8 +1,6 @@
 // License: GPL. For details, see Readme.txt file.
 
-import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -199,7 +197,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             }
         });
         panelBottom.add(openButton);
-        
+
         final JCheckBox showMapMarker = new JCheckBox("Map markers visible");
         showMapMarker.setSelected(map().getMapMarkersVisible());
         showMapMarker.addActionListener(new ActionListener() {
@@ -296,10 +294,12 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
 
         for (Coordinate loc: ds.data) {
             if(GetDistanceToClosestFence(loc,fenceLocations) < 170){
-                break;
+                MapMarkerDot newDot = new MapMarkerDot(Color.GREEN, loc.getLat(), loc.getLon());
+                map().addMapMarker(newDot);
+            }else{
+                MapMarkerDot newDot = new MapMarkerDot(personOne, null, loc.getLat(), loc.getLon());
+                map().addMapMarker(newDot);
             }
-            MapMarkerDot newDot = new MapMarkerDot(personOne, null, loc.getLat(), loc.getLon());
-            map().addMapMarker(newDot);
         }
     }
 

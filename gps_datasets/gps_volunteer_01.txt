@@ -6067,4 +6067,4 @@ Date (month/day/year)	Time (UTC)	Latitude (degrees)	Longitude (degrees)
 11/6/2009	4:57:41 PM	47.62070	-122.32887
 fences:
 47.61738	-122.32167	.1
-47.62093	-122.32887	.2
+47.62093	-122.32887	.1
