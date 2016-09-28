@@ -23,6 +23,11 @@ import org.openstreetmap.gui.jmapviewer.interfaces.*;
 import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 
+import org.apache.http.*;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
 import static java.lang.Math.*;
 
 /**
@@ -100,6 +105,41 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         return ds;
     }
 
+    private void GetRoutedDistance(Coordinate start, Coordinate end){
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        try {
+            // specify the host, protocol, and port
+            HttpHost target = new HttpHost("weather.yahooapis.com", 80, "http");
+
+            // specify the get request
+            HttpGet getRequest = new HttpGet("http://dev.virtualearth.net/REST/V1/Routes/Driving" +
+                    "?wp.0=" + start.getLat() + "," + start.getLon() +
+                    "&wp.1=" + end.getLat() + "," + end.getLon() +
+                    "&ra=routeSummariesOnly" +
+                    "&key=Ah2BJh4cdLWewXKf-u5I98pNrwtZz6JJxfCnbC-5M4GTBeHKDbQdzxtOP8yypEmU");
+
+            System.out.println("executing request to " + target);
+
+            HttpResponse httpResponse = httpclient.execute(getRequest);
+            HttpEntity entity = httpResponse.getEntity();
+
+            if (entity != null) {
+                System.out.println(EntityUtils.toString(entity));
+            }else{
+                JOptionPane.showMessageDialog(null, "Something went wrong, could not request route information",
+                        "InfoBox: " + "Uh Oh.", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // When HttpClient instance is no longer needed,
+            // shut down the connection manager to ensure
+            // immediate deallocation of all system resources
+            httpclient.getConnectionManager().shutdown();
+        }
+    }
+
     private void init() {
         setSize(400, 400);
 
@@ -159,7 +199,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             }
         });
         panelBottom.add(openButton);
-
+        
         final JCheckBox showMapMarker = new JCheckBox("Map markers visible");
         showMapMarker.setSelected(map().getMapMarkersVisible());
         showMapMarker.addActionListener(new ActionListener() {
@@ -188,10 +228,6 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
 
     private JMapViewer map() {
         return treeMap.getViewer();
-    }
-
-    private double distanceToClosestFence(Coordinate loc){
-        return 0;
     }
 
     private static Coordinate c(double lat, double lon) {
@@ -249,15 +285,18 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         DataSet ds = GetGPSData(filePath);
 
         Layer personOne = new Layer("Person One");
-        map().addMapMarker(new MapMarkerCircle(personOne, new Coordinate(ds.data.get(100).getLat(), ds.data.get(100).getLon()), convertMilesToOSM(.1)));
+        if(ds.fences.size() > 0){
+            for (Fence fence:ds.fences) {
+                map().addMapMarker(new MapMarkerCircle(personOne, new Coordinate(fence.location.getLat(),
+                        fence.location.getLon()), convertMilesToOSM(fence.radius)));
+            }
+        }
 
         ArrayList<MapMarker> fenceLocations = new ArrayList<>(map().getMapMarkerList());
 
         for (Coordinate loc: ds.data) {
             if(GetDistanceToClosestFence(loc,fenceLocations) < 170){
                 break;
-            }else{
-                System.out.println(GetDistanceToClosestFence(loc,fenceLocations));
             }
             MapMarkerDot newDot = new MapMarkerDot(personOne, null, loc.getLat(), loc.getLon());
             map().addMapMarker(newDot);
