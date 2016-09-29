@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -111,17 +112,12 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     private int GetRoutedTravelTime(Coordinate start, Coordinate end){
         DefaultHttpClient httpclient = new DefaultHttpClient();
         try {
-            // specify the host, protocol, and port
-            HttpHost target = new HttpHost("weather.yahooapis.com", 80, "http");
-
             // specify the get request
             HttpGet getRequest = new HttpGet("http://dev.virtualearth.net/REST/V1/Routes/Driving" +
                     "?wp.0=" + start.getLat() + "," + start.getLon() +
                     "&wp.1=" + end.getLat() + "," + end.getLon() +
                     "&ra=routeSummariesOnly" +
                     "&key=Ah2BJh4cdLWewXKf-u5I98pNrwtZz6JJxfCnbC-5M4GTBeHKDbQdzxtOP8yypEmU");
-
-            System.out.println("executing request to " + target);
 
             HttpResponse httpResponse = httpclient.execute(getRequest);
             HttpEntity entity = httpResponse.getEntity();
@@ -308,14 +304,26 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         DataSet ds = GetGPSData(filePath);
 
         Layer personOne = new Layer("Person One");
-        if(ds.fences.size() > 0){
-            for (Fence fence:ds.fences) {
-                map().addMapMarker(new MapMarkerCircle(personOne, new Coordinate(fence.location.getLat(),
-                        fence.location.getLon()), convertMilesToOSM(fence.radius)));
-            }
-        }
+        Random random = new Random(System.currentTimeMillis());
 
         ArrayList<MapMarker> fenceLocations = new ArrayList<>(map().getMapMarkerList());
+
+        for (int i = 0; i < ds.data.size()*.001; i++) {
+            fenceLocations = new ArrayList<>(map().getMapMarkerList());
+            int index = random.nextInt(ds.data.size());
+
+            // Make sure none of the fences overlap
+            if(fenceLocations.size() > 0){
+                while (GetDistanceToClosestFence(ds.data.get(index), fenceLocations) < 170){
+                    index = random.nextInt(ds.data.size());
+                }
+            }
+
+            map().addMapMarker(new MapMarkerCircle(personOne, new Coordinate(ds.data.get(index).getLat(),
+                    ds.data.get(index).getLon()), convertMilesToOSM(0.1)));
+        }
+
+        fenceLocations = new ArrayList<>(map().getMapMarkerList());
 
         for (Coordinate loc: ds.data) {
             if(GetDistanceToClosestFence(loc,fenceLocations) < 170){
@@ -326,13 +334,13 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
                 map().addMapMarker(newDot);
             }
         }
-        GetRoutedTravelTime(ds.data.get(0), GetClosestFenceCoordinate(ds.data.get(0), fenceLocations));
+        System.out.println(GetRoutedTravelTime(ds.data.get(0), GetClosestFenceCoordinate(ds.data.get(0), fenceLocations)));
     }
 
     private Coordinate GetClosestFenceCoordinate(Coordinate coordinate, ArrayList<MapMarker> fenceLocs) {
         Coordinate closestFence = fenceLocs.get(0).getCoordinate();
         for (MapMarker fence: fenceLocs) {
-            if(GetRoutedTravelTime(coordinate, fence.getCoordinate()) < GetRoutedTravelTime(coordinate, closestFence)){
+            if(getDistance(coordinate, fence.getCoordinate()) < getDistance(coordinate, closestFence)){
                 closestFence = fence.getCoordinate();
             }
         }
