@@ -9,8 +9,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -25,6 +29,7 @@ import org.apache.http.*;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.apache.commons.io.IOUtils;
 
 import static java.lang.Math.*;
 
@@ -103,7 +108,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         return ds;
     }
 
-    private void GetRoutedDistance(Coordinate start, Coordinate end){
+    private int GetRoutedTravelTime(Coordinate start, Coordinate end){
         DefaultHttpClient httpclient = new DefaultHttpClient();
         try {
             // specify the host, protocol, and port
@@ -122,7 +127,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             HttpEntity entity = httpResponse.getEntity();
 
             if (entity != null) {
-                System.out.println(EntityUtils.toString(entity));
+                return GetTravelTime(entity);
             }else{
                 JOptionPane.showMessageDialog(null, "Something went wrong, could not request route information",
                         "InfoBox: " + "Uh Oh.", JOptionPane.INFORMATION_MESSAGE);
@@ -136,6 +141,26 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             // immediate deallocation of all system resources
             httpclient.getConnectionManager().shutdown();
         }
+        return 0;
+    }
+
+    /*
+    Based on a REST response gets the travel time (using routing) between two points, in seconds.
+     */
+    private int GetTravelTime(HttpEntity response) throws IOException {
+        StringWriter writer=new StringWriter();
+        IOUtils.copy(response.getContent(),writer);
+        String responseStr = writer.toString();
+        Pattern p = Pattern.compile("\"travelDuration\":[0-9]+,");
+        Matcher m = p.matcher(responseStr);
+        m.find();
+        String requiredData = m.group();
+
+        p = Pattern.compile("[0-9]+");
+        m = p.matcher(requiredData);
+        m.find();
+        int n = Integer.parseInt(m.group());
+        return n;
     }
 
     private void init() {
@@ -301,6 +326,18 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
                 map().addMapMarker(newDot);
             }
         }
+        GetRoutedTravelTime(ds.data.get(0), GetClosestFenceCoordinate(ds.data.get(0), fenceLocations));
+    }
+
+    private Coordinate GetClosestFenceCoordinate(Coordinate coordinate, ArrayList<MapMarker> fenceLocs) {
+        Coordinate closestFence = fenceLocs.get(0).getCoordinate();
+        for (MapMarker fence: fenceLocs) {
+            if(GetRoutedTravelTime(coordinate, fence.getCoordinate()) < GetRoutedTravelTime(coordinate, closestFence)){
+                closestFence = fence.getCoordinate();
+            }
+        }
+
+        return new Coordinate(closestFence.getLat(),closestFence.getLon());
     }
 
     private void updateZoomParameters() {
