@@ -32,7 +32,7 @@ public class DataSet {
                 break;
             }
             String[] curLine = line.split("\\t");
-            data.add(new Coordinate(Double.parseDouble(curLine[2]), Double.parseDouble(curLine[3]), curLine[1]));
+            data.add(new Coordinate(Double.parseDouble(curLine[2]), Double.parseDouble(curLine[3]), curLine[0] + " " + curLine[1]));
         }
 
         br.close();
