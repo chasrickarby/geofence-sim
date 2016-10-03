@@ -5,6 +5,12 @@ import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
@@ -19,8 +25,43 @@ import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
 public class Coordinate implements ICoordinate {
     private transient Point2D.Double data;
 
+    public Date time;
+
+    public Coordinate(double lat, double lon, String hhmmss) {
+        data = new Point2D.Double(lon, lat);
+        time = parseTime(hhmmss);
+        System.out.println(time);
+    }
+
     public Coordinate(double lat, double lon) {
         data = new Point2D.Double(lon, lat);
+    }
+
+    private Date parseTime(String hhmmss) {
+        boolean isAfterNoon = false;
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        if(hhmmss.contains("PM")){
+            isAfterNoon = true;
+            hhmmss.replace("PM", "");
+        }else{
+            hhmmss.replace("AM", "");
+        }
+        hhmmss.trim();
+
+        try {
+            Date dt = formatter.parse(hhmmss);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dt);
+            int hour = cal.get(Calendar.HOUR);
+            int minute = cal.get(Calendar.MINUTE);
+            int second = cal.get(Calendar.SECOND);
+            return dt;
+        } catch (ParseException e) {
+            // This can happen if you are trying to parse an invalid date, e.g., 25:19:12.
+            // Here, you should log the error and decide what to do next
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

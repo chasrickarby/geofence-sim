@@ -7,5 +7,250 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/jackson-annotations-2.8.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/spring-web-3.0.2.RELEASE.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-aop-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-aspects-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-beans-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-context-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-context-support-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-core-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-expression-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-instrument-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-instrument-tomcat-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-jdbc-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-jms-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-messaging-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-orm-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-oxm-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-test-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-tx-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-web-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-webmvc-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-webmvc-portlet-4.3.3.RELEASE.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-websocket-4.3.3.RELEASE.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-aop-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-aspects-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-beans-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-context-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-context-support-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-core-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-expression-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-instrument-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-instrument-tomcat-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-jdbc-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-jms-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-messaging-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-orm-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-oxm-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-test-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-tx-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-web-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-webmvc-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-webmvc-portlet-4.3.3.RELEASE-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-websocket-4.3.3.RELEASE-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-aop-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-aspects-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-beans-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-context-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-context-support-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-core-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-expression-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-instrument-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-instrument-tomcat-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-jdbc-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-jms-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-messaging-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-orm-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-oxm-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-test-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-tx-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-web-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-webmvc-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-webmvc-portlet-4.3.3.RELEASE-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/libs/spring-websocket-4.3.3.RELEASE-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/commons-logging-1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/src/libs/commons-logging-1.2-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/apache/jcl-over-slf4j-1.7.21.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/jul-to-slf4j-1.7.21.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/log4j-over-slf4j-1.7.21.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/osgi-over-slf4j-1.7.21.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/slf4j-android-1.7.21.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/slf4j-jcl-1.7.21.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/slf4j-jdk14-1.7.21.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/slf4j-nop-1.7.21.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/slf4j-simple-1.7.21.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/src/libs/apache/jcl-over-slf4j-1.7.21-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/jul-to-slf4j-1.7.21-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/log4j-over-slf4j-1.7.21-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/osgi-over-slf4j-1.7.21-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/slf4j-android-1.7.21-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/slf4j-jdk14-1.7.21-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/slf4j-nop-1.7.21-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/libs/apache/slf4j-simple-1.7.21-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/spring-boot-autoconfigure-1.0.0.RELEASE.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/lib/commons-codec-1.9.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/lib/commons-logging-1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/lib/fluent-hc-4.5.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/lib/httpclient-4.5.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/lib/httpclient-cache-4.5.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/lib/httpclient-win-4.5.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/lib/httpcore-4.4.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/lib/httpmime-4.5.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/lib/jna-4.1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/lib/jna-platform-4.1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/libs/apache/slf4j-log4j12-1.7.21.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/src/libs/apache/slf4j-log4j12-1.7.21-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/src/libs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/src/libs" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>

@@ -1,33 +1,38 @@
-
-
 // License: GPL. For details, see Readme.txt file.
 
-import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.openstreetmap.gui.jmapviewer.*;
 import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
-import org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
-import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
-import org.openstreetmap.gui.jmapviewer.interfaces.TileLoader;
-import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
+import org.openstreetmap.gui.jmapviewer.interfaces.*;
 import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
+
+import org.apache.http.*;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.apache.commons.io.IOUtils;
+
+import static java.lang.Math.*;
 
 /**
  * Demonstrates the usage of {@link JMapViewer}
@@ -38,23 +43,124 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
 
     private static final long serialVersionUID = 1L;
 
-    private final JMapViewerTree treeMap;
+    private JMapViewerTree treeMap;
 
-    private final JLabel zoomLabel;
-    private final JLabel zoomValue;
+    private JLabel zoomLabel;
+    private JLabel zoomValue;
 
-    private final JLabel mperpLabelName;
-    private final JLabel mperpLabelValue;
+    private JLabel mperpLabelName;
+    private JLabel mperpLabelValue;
 
     /**
      * Constructs the {@code Simulator}.
      */
     public Simulator() throws IOException {
-        super("Geofence Simulator");
-        setSize(400, 400);
 
-        System.out.println("Attempting to read in data");
-        DataSet ds = new DataSet("/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt");
+        super("Geofence Simulator");
+        init();
+
+        AddMouseListeners();
+    }
+
+    private void AddMouseListeners() {
+        map().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    map().getAttribution().handleAttribution(e.getPoint(), true);
+                }
+            }
+        });
+
+        map().addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                Point p = e.getPoint();
+                boolean cursorHand = map().getAttribution().handleAttributionCursor(p);
+                if (cursorHand) {
+                    map().setCursor(new Cursor(Cursor.HAND_CURSOR));
+                } else {
+                    map().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                }
+            }
+        });
+    }
+
+    private double GetDistanceToClosestFence(Coordinate curLoc, ArrayList<MapMarker> fenceLocs){
+        ArrayList<Double> distances = new ArrayList<>();
+        for (MapMarker fence: fenceLocs) {
+            distances.add(getDistance(curLoc, fence.getCoordinate()));
+        }
+        return Collections.min(distances);
+    }
+
+    private DataSet GetGPSData(String filePath) {
+
+        System.out.println("Attempting to read in data...");
+
+        DataSet ds = null;
+        try {
+            ds = new DataSet(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Read data in correctly.");
+
+        return ds;
+    }
+
+    private int GetRoutedTravelTime(Coordinate start, Coordinate end){
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        try {
+            // specify the get request
+            HttpGet getRequest = new HttpGet("http://dev.virtualearth.net/REST/V1/Routes/Driving" +
+                    "?wp.0=" + start.getLat() + "," + start.getLon() +
+                    "&wp.1=" + end.getLat() + "," + end.getLon() +
+                    "&ra=routeSummariesOnly" +
+                    "&key=Ah2BJh4cdLWewXKf-u5I98pNrwtZz6JJxfCnbC-5M4GTBeHKDbQdzxtOP8yypEmU");
+
+            HttpResponse httpResponse = httpclient.execute(getRequest);
+            HttpEntity entity = httpResponse.getEntity();
+
+            if (entity != null) {
+                return GetTravelTime(entity);
+            }else{
+                JOptionPane.showMessageDialog(null, "Something went wrong, could not request route information",
+                        "InfoBox: " + "Uh Oh.", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // When HttpClient instance is no longer needed,
+            // shut down the connection manager to ensure
+            // immediate deallocation of all system resources
+            httpclient.getConnectionManager().shutdown();
+        }
+        return 0;
+    }
+
+    /*
+    Based on a REST response gets the travel time (using routing) between two points, in seconds.
+     */
+    private int GetTravelTime(HttpEntity response) throws IOException {
+        StringWriter writer=new StringWriter();
+        IOUtils.copy(response.getContent(),writer);
+        String responseStr = writer.toString();
+        Pattern p = Pattern.compile("\"travelDuration\":[0-9]+,");
+        Matcher m = p.matcher(responseStr);
+        m.find();
+        String requiredData = m.group();
+
+        p = Pattern.compile("[0-9]+");
+        m = p.matcher(requiredData);
+        m.find();
+        int n = Integer.parseInt(m.group());
+        return n;
+    }
+
+    private void init() {
+        setSize(400, 400);
 
         treeMap = new JMapViewerTree("Zones");
 
@@ -90,28 +196,29 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
                 map().setDisplayToFitMapMarkers();
             }
         });
-        JComboBox<TileSource> tileSourceSelector = new JComboBox<>(new TileSource[]{
-                new OsmTileSource.Mapnik(),
-                new OsmTileSource.CycleMap(),
-                new BingAerialTileSource(),
-        });
-        tileSourceSelector.addItemListener(new ItemListener() {
+        panelBottom.add(button);
+
+        JButton openButton = new JButton("Open GPS File");
+        openButton.addActionListener(new ActionListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {
-                map().setTileSource((TileSource) e.getItem());
+            public void actionPerformed(ActionEvent e){
+                JFileChooser openFileDlg = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+                openFileDlg.setFileFilter(filter);
+
+                if (openFileDlg.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    File file = openFileDlg.getSelectedFile();
+                    //This is where a real application would open the file.
+                    System.out.println("Opening: " + file.getAbsolutePath() + ".");
+                    plotPoints(file.getAbsolutePath());
+                } else {
+                    System.out.println("Open command cancelled by user.");
+                }
+
             }
         });
-        JComboBox<TileLoader> tileLoaderSelector;
-        tileLoaderSelector = new JComboBox<>(new TileLoader[]{new OsmTileLoader(map())});
-        tileLoaderSelector.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                map().setTileLoader((TileLoader) e.getItem());
-            }
-        });
-        map().setTileLoader((TileLoader) tileLoaderSelector.getSelectedItem());
-        panelTop.add(tileSourceSelector);
-        panelTop.add(tileLoaderSelector);
+        panelBottom.add(openButton);
+
         final JCheckBox showMapMarker = new JCheckBox("Map markers visible");
         showMapMarker.setSelected(map().getMapMarkersVisible());
         showMapMarker.addActionListener(new ActionListener() {
@@ -121,52 +228,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             }
         });
         panelBottom.add(showMapMarker);
-        ///
-        final JCheckBox showTreeLayers = new JCheckBox("Tree Layers visible");
-        showTreeLayers.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                treeMap.setTreeVisible(showTreeLayers.isSelected());
-            }
-        });
-        panelBottom.add(showTreeLayers);
-        ///
-        final JCheckBox showToolTip = new JCheckBox("ToolTip visible");
-        showToolTip.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                map().setToolTipText(null);
-            }
-        });
-        panelBottom.add(showToolTip);
-        ///
-        final JCheckBox showTileGrid = new JCheckBox("Tile grid visible");
-        showTileGrid.setSelected(map().isTileGridVisible());
-        showTileGrid.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                map().setTileGridVisible(showTileGrid.isSelected());
-            }
-        });
-        panelBottom.add(showTileGrid);
-        final JCheckBox showZoomControls = new JCheckBox("Show zoom controls");
-        showZoomControls.setSelected(map().getZoomControlsVisible());
-        showZoomControls.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                map().setZoomContolsVisible(showZoomControls.isSelected());
-            }
-        });
-        panelBottom.add(showZoomControls);
-        final JCheckBox scrollWrapEnabled = new JCheckBox("Scrollwrap enabled");
-        scrollWrapEnabled.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                map().setScrollWrapEnabled(scrollWrapEnabled.isSelected());
-            }
-        });
-        panelBottom.add(scrollWrapEnabled);
-        panelBottom.add(button);
+
 
         panelTop.add(zoomLabel);
         panelTop.add(zoomValue);
@@ -174,64 +236,13 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         panelTop.add(mperpLabelValue);
 
         add(treeMap, BorderLayout.CENTER);
+    }
 
-        //
-        LayerGroup germanyGroup = new LayerGroup("Germany");
-        Layer germanyWestLayer = germanyGroup.addLayer("Germany West");
-        Layer germanyEastLayer = germanyGroup.addLayer("Germany East");
-        MapMarkerDot eberstadt = new MapMarkerDot(germanyEastLayer, "Eberstadt", 49.814284999, 8.642065999);
-        MapMarkerDot ebersheim = new MapMarkerDot(germanyWestLayer, "Ebersheim", 49.91, 8.24);
-        MapMarkerDot empty = new MapMarkerDot(germanyEastLayer, 49.71, 8.64);
-        MapMarkerDot darmstadt = new MapMarkerDot(germanyEastLayer, "Darmstadt", 49.8588, 8.643);
-        map().addMapMarker(eberstadt);
-        map().addMapMarker(ebersheim);
-        map().addMapMarker(empty);
-        Layer franceLayer = treeMap.addLayer("France");
-        map().addMapMarker(new MapMarkerDot(franceLayer, "La Gallerie", 48.71, -1));
-        map().addMapMarker(new MapMarkerDot(43.604, 1.444));
-        map().addMapMarker(new MapMarkerCircle(53.343, -6.267, 0.666));
-        map().addMapRectangle(new MapRectangleImpl(new Coordinate(53.343, -6.267), new Coordinate(43.604, 1.444)));
-        map().addMapMarker(darmstadt);
-        treeMap.addLayer(germanyWestLayer);
-        treeMap.addLayer(germanyEastLayer);
-
-        MapPolygon bermudas = new MapPolygonImpl(c(49, 1), c(45, 10), c(40, 5));
-        map().addMapPolygon(bermudas);
-        map().addMapPolygon(new MapPolygonImpl(germanyEastLayer, "Riedstadt", ebersheim, darmstadt, eberstadt, empty));
-
-        map().addMapMarker(new MapMarkerCircle(germanyWestLayer, "North of Suisse", new Coordinate(48, 7), .5));
-        Layer spain = treeMap.addLayer("Spain");
-        map().addMapMarker(new MapMarkerCircle(spain, "La Garena", new Coordinate(40.4838, -3.39), .002));
-        spain.setVisible(Boolean.FALSE);
-
-        Layer wales = treeMap.addLayer("UK");
-        map().addMapRectangle(new MapRectangleImpl(wales, "Wales", c(53.35, -4.57), c(51.64, -2.63)));
-
-        // map.setDisplayPosition(new Coordinate(49.807, 8.6), 11);
-        // map.setTileGridVisible(true);
-
-        map().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    map().getAttribution().handleAttribution(e.getPoint(), true);
-                }
-            }
-        });
-
-        map().addMouseMotionListener(new MouseAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                Point p = e.getPoint();
-                boolean cursorHand = map().getAttribution().handleAttributionCursor(p);
-                if (cursorHand) {
-                    map().setCursor(new Cursor(Cursor.HAND_CURSOR));
-                } else {
-                    map().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                }
-                if (showToolTip.isSelected()) map().setToolTipText(map().getPosition(p).toString());
-            }
-        });
+    /**
+     * @param miles Distance in miles to be converted to a double representing OSM radius distance.
+     */
+    private double convertMilesToOSM(double miles){
+        return miles/69;
     }
 
     private JMapViewer map() {
@@ -247,6 +258,94 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
      */
     public static void main(String[] args) throws IOException {
         new Simulator().setVisible(true);
+    }
+
+    /*
+     * Calculate distance between two points in latitude and longitude taking
+     * into account height difference. If you are not interested in height
+     * difference pass 0.0. Uses Haversine method as its base.
+     *
+     * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters
+     * el2 End altitude in meters
+     * @returns Distance in Meters
+     */
+    private double distance(double lat1, double lat2, double lon1,
+                                  double lon2, double el1, double el2) {
+
+        final int R = 6371; // Radius of the earth
+
+        Double latDistance = toRadians(lat2 - lat1);
+        Double lonDistance = toRadians(lon2 - lon1);
+        Double a = sin(latDistance / 2) * sin(latDistance / 2)
+                + cos(toRadians(lat1)) * cos(toRadians(lat2))
+                * sin(lonDistance / 2) * sin(lonDistance / 2);
+        Double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+
+        double height = el1 - el2;
+
+        distance = pow(distance, 2) + pow(height, 2);
+
+        return sqrt(distance);
+    }
+
+    /*
+     * Wrapper for the Haversine method.
+     *
+     * coord1, coord2, Points to get the distance between
+     * el2 End altitude in meters
+     * @returns Distance in Meters
+     */
+    private double getDistance(Coordinate coord1, Coordinate coord2){
+        return distance(coord1.getLat(), coord2.getLat(), coord1.getLon(),coord2.getLon(), 0, 0);
+    }
+
+    private void plotPoints(String filePath){
+        DataSet ds = GetGPSData(filePath);
+
+        Layer personOne = new Layer("Person One");
+        Random random = new Random(System.currentTimeMillis());
+
+        ArrayList<MapMarker> fenceLocations = new ArrayList<>(map().getMapMarkerList());
+
+        for (int i = 0; i < ds.data.size()*.001; i++) {
+            fenceLocations = new ArrayList<>(map().getMapMarkerList());
+            int index = random.nextInt(ds.data.size());
+
+            // Make sure none of the fences overlap
+            if(fenceLocations.size() > 0){
+                while (GetDistanceToClosestFence(ds.data.get(index), fenceLocations) < 170){
+                    index = random.nextInt(ds.data.size());
+                }
+            }
+
+            map().addMapMarker(new MapMarkerCircle(personOne, new Coordinate(ds.data.get(index).getLat(),
+                    ds.data.get(index).getLon()), convertMilesToOSM(0.1)));
+        }
+
+        fenceLocations = new ArrayList<>(map().getMapMarkerList());
+
+        for (Coordinate loc: ds.data) {
+            if(GetDistanceToClosestFence(loc,fenceLocations) < 170){
+                MapMarkerDot newDot = new MapMarkerDot(Color.GREEN, loc.getLat(), loc.getLon());
+                map().addMapMarker(newDot);
+            }else{
+                MapMarkerDot newDot = new MapMarkerDot(personOne, null, loc.getLat(), loc.getLon());
+                map().addMapMarker(newDot);
+            }
+        }
+        System.out.println(GetRoutedTravelTime(ds.data.get(0), GetClosestFenceCoordinate(ds.data.get(0), fenceLocations)));
+    }
+
+    private Coordinate GetClosestFenceCoordinate(Coordinate coordinate, ArrayList<MapMarker> fenceLocs) {
+        Coordinate closestFence = fenceLocs.get(0).getCoordinate();
+        for (MapMarker fence: fenceLocs) {
+            if(getDistance(coordinate, fence.getCoordinate()) < getDistance(coordinate, closestFence)){
+                closestFence = fence.getCoordinate();
+            }
+        }
+
+        return new Coordinate(closestFence.getLat(),closestFence.getLon());
     }
 
     private void updateZoomParameters() {
