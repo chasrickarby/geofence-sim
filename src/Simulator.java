@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -336,21 +337,16 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             }
 
             map().addMapMarker(new MapMarkerCircle(personOne, new Coordinate(ds.data.get(index).getLat(),
-                    ds.data.get(index).getLon()), convertMilesToOSM(0.1)));
+                    ds.data.get(index).getLon()), convertMilesToOSM(0.06)));
         }
 
         fenceLocations = new ArrayList<>(map().getMapMarkerList());
     }
 
     private Coordinate GetClosestFenceCoordinate(Coordinate coordinate, ArrayList<MapMarker> fenceLocs) {
-        Coordinate closestFence = fenceLocs.get(0).getCoordinate();
-        for (MapMarker fence: fenceLocs) {
-            if(getDistance(coordinate, fence.getCoordinate()) < getDistance(coordinate, closestFence)){
-                closestFence = fence.getCoordinate();
-            }
-        }
+        MapMarker closestRoutedFence = GetClosestRoutedFence(coordinate, fenceLocations);
 
-        return new Coordinate(closestFence.getLat(),closestFence.getLon());
+        return new Coordinate(closestRoutedFence.getCoordinate().getLat(),closestRoutedFence.getCoordinate().getLon());
     }
 
     private void updateZoomParameters() {
@@ -361,22 +357,46 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     }
 
     private void plotAPoint(){
-        Coordinate loc = dataset.data.get(0);
-        if(GetDistanceToClosestFence(loc,fenceLocations) < 170){
+        int index = 0;
+        Coordinate loc = dataset.data.get(index);
+        double closestFenceDistance = GetDistanceToClosestFence(loc,fenceLocations);
+        if(closestFenceDistance < 102){
             MapMarkerDot newDot = new MapMarkerDot(Color.GREEN, loc.getLat(), loc.getLon());
             map().addMapMarker(newDot);
             helpLabel.setText("Geofence Hit: " + loc.time );
         }else{
+            int travelTimeInSeconds = GetRoutedTravelTime(loc, GetClosestFenceCoordinate(loc, fenceLocations));
+            LocalDateTime newTime = LocalDateTime.from(loc.time.plusSeconds(travelTimeInSeconds));
+            while(dataset.data.get(index).time.isBefore(newTime)){
+                loc = dataset.data.get(index);
+                MapMarkerDot newDot = new MapMarkerDot(Color.RED, loc.getLat(), loc.getLon());
+                map().addMapMarker(newDot);
+                dataset.data.remove(index);
+            }
+            loc = dataset.data.get(index);
             MapMarkerDot newDot = new MapMarkerDot(personOne, null, loc.getLat(), loc.getLon());
             map().addMapMarker(newDot);
             helpLabel.setText("Current Time: " + loc.time );
         }
-        dataset.data.remove(0);
+        dataset.data.remove(index);
+    }
+
+    private MapMarker GetClosestRoutedFence(Coordinate loc, ArrayList<MapMarker> fenceLocations) {
+        MapMarker closestRoutedFence = fenceLocations.get(0);
+        int minimumTravelTime = GetRoutedTravelTime(loc, closestRoutedFence.getCoordinate());
+        for (MapMarker fence:fenceLocations) {
+            int curTravelTime = GetRoutedTravelTime(loc, fence.getCoordinate());
+            if(curTravelTime < minimumTravelTime){
+                minimumTravelTime = curTravelTime;
+                closestRoutedFence = fence;
+            }
+        }
+        return closestRoutedFence;
     }
 
     private void plotFirstPoint(){
         Coordinate loc = dataset.data.get(0);
-        if(GetDistanceToClosestFence(loc,fenceLocations) < 170){
+        if(GetDistanceToClosestFence(loc,fenceLocations) < 102){
             MapMarkerDot newDot = new MapMarkerDot(Color.GREEN, loc.getLat(), loc.getLon());
             map().addMapMarker(newDot);
             helpLabel.setText("Geofence Hit: " + loc.time );
