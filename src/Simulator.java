@@ -221,7 +221,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
                 } else {
                     System.out.println("Open command cancelled by user.");
                 }
-
+                plotFirstPoint();
             }
         });
         panelBottom.add(openButton);
@@ -340,17 +340,6 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         }
 
         fenceLocations = new ArrayList<>(map().getMapMarkerList());
-
-//        for (Coordinate loc: ds.data) {
-//            if(GetDistanceToClosestFence(loc,fenceLocations) < 170){
-//                MapMarkerDot newDot = new MapMarkerDot(Color.GREEN, loc.getLat(), loc.getLon());
-//                map().addMapMarker(newDot);
-//            }else{
-//                MapMarkerDot newDot = new MapMarkerDot(personOne, null, loc.getLat(), loc.getLon());
-//                map().addMapMarker(newDot);
-//            }
-//        }
-//        System.out.println(GetRoutedTravelTime(ds.data.get(0), GetClosestFenceCoordinate(ds.data.get(0), fenceLocations)));
     }
 
     private Coordinate GetClosestFenceCoordinate(Coordinate coordinate, ArrayList<MapMarker> fenceLocs) {
@@ -372,6 +361,20 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     }
 
     private void plotAPoint(){
+        Coordinate loc = dataset.data.get(0);
+        if(GetDistanceToClosestFence(loc,fenceLocations) < 170){
+            MapMarkerDot newDot = new MapMarkerDot(Color.GREEN, loc.getLat(), loc.getLon());
+            map().addMapMarker(newDot);
+            helpLabel.setText("Geofence Hit: " + loc.time );
+        }else{
+            MapMarkerDot newDot = new MapMarkerDot(personOne, null, loc.getLat(), loc.getLon());
+            map().addMapMarker(newDot);
+            helpLabel.setText("Current Time: " + loc.time );
+        }
+        dataset.data.remove(0);
+    }
+
+    private void plotFirstPoint(){
         Coordinate loc = dataset.data.get(0);
         if(GetDistanceToClosestFence(loc,fenceLocations) < 170){
             MapMarkerDot newDot = new MapMarkerDot(Color.GREEN, loc.getLat(), loc.getLon());
