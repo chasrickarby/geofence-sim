@@ -314,7 +314,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
 
             // Make sure none of the fences overlap
             if(fenceLocations.size() > 0){
-                while (GetDistanceToClosestFence(ds.data.get(index), fenceLocations) < 170){
+                while (GetDistanceToClosestFence(ds.data.get(index), fenceLocations) < 340){
                     index = random.nextInt(ds.data.size());
                 }
             }
