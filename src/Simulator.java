@@ -7,6 +7,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Cursor;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,7 +58,12 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     private Layer personOne;
     private JLabel helpLabel;
 
-
+    // For Results:
+    int unrequestedPoints = 0;
+    int requestedPoints = 0;
+    int totalNumberFences = 0;
+    int requestedHits = 0;
+    int requestedMisses = 0;
 
     /**
      * Constructs the {@code Simulator}.
@@ -219,10 +225,10 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
                     //This is where a real application would open the file.
                     System.out.println("Opening: " + file.getAbsolutePath() + ".");
                     plotPoints(file.getAbsolutePath());
+                    plotFirstPoint();
                 } else {
                     System.out.println("Open command cancelled by user.");
                 }
-                plotFirstPoint();
             }
         });
         panelBottom.add(openButton);
@@ -235,6 +241,18 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             }
         });
         panelBottom.add(plotNextPointButton);
+
+        JButton plotRemainingButton = new JButton("Plot All/Remaining Points");
+        plotRemainingButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                while(dataset.data.size() > 0 && fenceLocations.size() > 0){
+                    plotAPoint();
+                }
+                printResults();
+            }
+        });
+        panelBottom.add(plotRemainingButton);
 
         final JCheckBox showMapMarker = new JCheckBox("Map markers visible");
         showMapMarker.setSelected(map().getMapMarkersVisible());
@@ -341,6 +359,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         }
 
         fenceLocations = new ArrayList<>(map().getMapMarkerList());
+        totalNumberFences = fenceLocations.size();
     }
 
     private Coordinate GetClosestFenceCoordinate(Coordinate coordinate, ArrayList<MapMarker> fenceLocs) {
@@ -358,35 +377,70 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
 
     private void plotAPoint(){
         int index = 0;
+        if(dataset.data.size() == 0){
+            printResults();
+            return;
+        }
         Coordinate loc = dataset.data.get(index);
+        if(loc == null){
+            printResults();
+            return;
+        }
         //double closestFenceDistance = GetDistanceToClosestFence(loc,fenceLocations);
         Coordinate closestFenceLocation = GetClosestFenceCoordinate(loc, fenceLocations);
         int routedTime = GetRoutedTravelTime(loc, closestFenceLocation);
+        int marginOfError = (int)(routedTime * 0.25);
+
+        LocalDateTime newTime = LocalDateTime.from(loc.time.plusSeconds(routedTime - marginOfError));
+
+
+        while(dataset.data.get(index).time.isBefore(newTime)){
+            loc = dataset.data.get(index);
+            MapMarkerDot newDot = new MapMarkerDot(Color.RED, loc.getLat(), loc.getLon());
+            map().addMapMarker(newDot);
+            unrequestedPoints++;
+            dataset.data.remove(index);
+        }
+        loc = dataset.data.get(index);
+        routedTime = GetRoutedTravelTime(loc, closestFenceLocation);
         if(routedTime < 30){
             MapMarkerDot newDot = new MapMarkerDot(Color.GREEN, loc.getLat(), loc.getLon());
             map().addMapMarker(newDot);
             helpLabel.setText("Geofence Hit: " + loc.time );
+            System.out.println("Before: " + fenceLocations.size());
+            for (int i = 0; i < map().getMapMarkerList().size(); i++){
+                if(fenceLocations.get(i).getCoordinate().getLat() == closestFenceLocation.getLat() && fenceLocations.get(i).getCoordinate().getLon() == closestFenceLocation.getLon()){
+                    fenceLocations.remove(i);
+                    break;
+                }
+            }
+            requestedPoints++;
+            requestedHits++;
+            System.out.println("After: " + fenceLocations.size());
         }else{
-            int travelTimeInSeconds = GetRoutedTravelTime(loc, GetClosestFenceCoordinate(loc, fenceLocations));
-            LocalDateTime newTime = LocalDateTime.from(loc.time.plusSeconds(travelTimeInSeconds));
-            while(dataset.data.get(index).time.isBefore(newTime)){
-                loc = dataset.data.get(index);
-                MapMarkerDot newDot = new MapMarkerDot(Color.RED, loc.getLat(), loc.getLon());
-                map().addMapMarker(newDot);
-                dataset.data.remove(index);
-            }
-            loc = dataset.data.get(index);
-            if(routedTime < 30){
-                MapMarkerDot newDot = new MapMarkerDot(Color.GREEN, loc.getLat(), loc.getLon());
-                map().addMapMarker(newDot);
-                helpLabel.setText("Geofence Hit: " + loc.time );
-            }else{
-                MapMarkerDot newDot = new MapMarkerDot(personOne, null, loc.getLat(), loc.getLon());
-                map().addMapMarker(newDot);
-                helpLabel.setText("Current Time: " + loc.time );
-            }
+            MapMarkerDot newDot = new MapMarkerDot(personOne, null, loc.getLat(), loc.getLon());
+            map().addMapMarker(newDot);
+            helpLabel.setText("Current Time: " + loc.time );
+            requestedPoints++;
+            requestedMisses++;
         }
+
         dataset.data.remove(index);
+    }
+
+    private void printResults(){
+        System.out.println("\n\n- - - - - - - - - - - - - - - - - - - - - - - -\n\n");
+        System.out.println("GPS points requested:\t" + requestedPoints);
+        System.out.println("GPS points skipped:\t" + unrequestedPoints);
+        System.out.println("Total number of GPS points:\t" + (requestedPoints + unrequestedPoints));
+        System.out.println("Total number of fences:\t" + totalNumberFences);
+        int unHitFences = fenceLocations.size();
+        int hitFences = totalNumberFences - unHitFences;
+        double efficiency = 100.00 - (((double)requestedPoints/((double)requestedPoints + (double)unrequestedPoints))*100.00);
+        double accuracy = (hitFences/totalNumberFences) * 100;
+        System.out.println("Unhit fences:\t" + unHitFences);
+        System.out.println("Accuracy:\t" + accuracy + "%");
+        System.out.println("Efficiency:\t" + efficiency + "%");
     }
 
     private MapMarker GetClosestRoutedFence(Coordinate loc, ArrayList<MapMarker> fenceLocations) {
@@ -407,13 +461,25 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         if(GetDistanceToClosestFence(loc,fenceLocations) < 102){
             MapMarkerDot newDot = new MapMarkerDot(Color.GREEN, loc.getLat(), loc.getLon());
             map().addMapMarker(newDot);
+            Coordinate closestFenceLocation = GetClosestFenceCoordinate(loc, fenceLocations);
             helpLabel.setText("Geofence Hit: " + loc.time );
+            requestedHits++;
+            System.out.println("Before: " + fenceLocations.size());
+            for (int i = 0; i < map().getMapMarkerList().size(); i++){
+                if(fenceLocations.get(i).getCoordinate().getLat() == closestFenceLocation.getLat() && fenceLocations.get(i).getCoordinate().getLon() == closestFenceLocation.getLon()){
+                    fenceLocations.remove(i);
+                    break;
+                }
+            }
+            System.out.println("After: " + fenceLocations.size());
         }else{
             MapMarkerDot newDot = new MapMarkerDot(personOne, null, loc.getLat(), loc.getLon());
             map().addMapMarker(newDot);
             helpLabel.setText("Current Time: " + loc.time );
+            requestedMisses++;
         }
         dataset.data.remove(0);
+        requestedPoints++;
     }
 
     @Override
