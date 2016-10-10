@@ -32,7 +32,6 @@ public class Coordinate implements ICoordinate {
     public Coordinate(double lat, double lon, String hhmmss) {
         data = new Point2D.Double(lon, lat);
         time = parseTime(hhmmss);
-        System.out.println(time);
     }
 
     public Coordinate(double lat, double lon) {

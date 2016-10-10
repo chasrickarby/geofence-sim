@@ -359,8 +359,10 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     private void plotAPoint(){
         int index = 0;
         Coordinate loc = dataset.data.get(index);
-        double closestFenceDistance = GetDistanceToClosestFence(loc,fenceLocations);
-        if(closestFenceDistance < 102){
+        //double closestFenceDistance = GetDistanceToClosestFence(loc,fenceLocations);
+        Coordinate closestFenceLocation = GetClosestFenceCoordinate(loc, fenceLocations);
+        int routedTime = GetRoutedTravelTime(loc, closestFenceLocation);
+        if(routedTime < 30){
             MapMarkerDot newDot = new MapMarkerDot(Color.GREEN, loc.getLat(), loc.getLon());
             map().addMapMarker(newDot);
             helpLabel.setText("Geofence Hit: " + loc.time );
@@ -374,9 +376,15 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
                 dataset.data.remove(index);
             }
             loc = dataset.data.get(index);
-            MapMarkerDot newDot = new MapMarkerDot(personOne, null, loc.getLat(), loc.getLon());
-            map().addMapMarker(newDot);
-            helpLabel.setText("Current Time: " + loc.time );
+            if(routedTime < 30){
+                MapMarkerDot newDot = new MapMarkerDot(Color.GREEN, loc.getLat(), loc.getLon());
+                map().addMapMarker(newDot);
+                helpLabel.setText("Geofence Hit: " + loc.time );
+            }else{
+                MapMarkerDot newDot = new MapMarkerDot(personOne, null, loc.getLat(), loc.getLon());
+                map().addMapMarker(newDot);
+                helpLabel.setText("Current Time: " + loc.time );
+            }
         }
         dataset.data.remove(index);
     }
