@@ -12,10 +12,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,6 +64,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     int totalNumberFences = 0;
     int requestedHits = 0;
     int requestedMisses = 0;
+    long duration = 0;
 
     /**
      * Constructs the {@code Simulator}.
@@ -237,7 +238,9 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         plotNextPointButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                plotAPoint();
+                if(plotAPoint() == 1){
+                    return;
+                }
             }
         });
         panelBottom.add(plotNextPointButton);
@@ -246,9 +249,14 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         plotRemainingButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+                long startTime = System.currentTimeMillis();
                 while(dataset.data.size() > 0 && fenceLocations.size() > 0){
-                    plotAPoint();
+                    if(plotAPoint() == 1){
+                        return;
+                    }
                 }
+                long endTime = System.currentTimeMillis();
+                duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
                 printResults();
             }
         });
@@ -292,7 +300,23 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
      * @param args Main program arguments
      */
     public static void main(String[] args) throws IOException {
-        new Simulator().setVisible(true);
+        if(args.length > 0){
+
+            // Arguments: <file or folder> <number of fences> <number of iterations> <log file>
+
+            // Run in command line
+            // Check for .txt
+            // Check for number of fences
+            //      If no argument, do 10 random fences, do not allow over 30
+            // Check for iteration
+            //      If no argument, do 1 iteration
+            // Check for log location
+            //      If no argument, just put a log.txt in the same directory as the data files
+            // print results for every iteration before moving on to next file
+
+        }else{
+            new Simulator().setVisible(true);
+        }
     }
 
     /*
@@ -375,16 +399,14 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             zoomValue.setText(String.format("%s", map().getZoom()));
     }
 
-    private void plotAPoint(){
+    private int plotAPoint(){
         int index = 0;
         if(dataset.data.size() == 0){
-            printResults();
-            return;
+            return 1;
         }
         Coordinate loc = dataset.data.get(index);
         if(loc == null){
-            printResults();
-            return;
+            return 1;
         }
         //double closestFenceDistance = GetDistanceToClosestFence(loc,fenceLocations);
         Coordinate closestFenceLocation = GetClosestFenceCoordinate(loc, fenceLocations);
@@ -393,14 +415,18 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
 
         LocalDateTime newTime = LocalDateTime.from(loc.time.plusSeconds(routedTime - marginOfError));
 
-
-        while(dataset.data.get(index).time.isBefore(newTime)){
-            loc = dataset.data.get(index);
-            MapMarkerDot newDot = new MapMarkerDot(Color.RED, loc.getLat(), loc.getLon());
-            map().addMapMarker(newDot);
-            unrequestedPoints++;
-            dataset.data.remove(index);
+        try{
+            while(dataset.data.get(index).time.isBefore(newTime)){
+                loc = dataset.data.get(index);
+                MapMarkerDot newDot = new MapMarkerDot(Color.RED, loc.getLat(), loc.getLon());
+                map().addMapMarker(newDot);
+                unrequestedPoints++;
+                dataset.data.remove(index);
+            }
+        }catch(IndexOutOfBoundsException ex){
+            return 1;
         }
+
         loc = dataset.data.get(index);
         routedTime = GetRoutedTravelTime(loc, closestFenceLocation);
         if(routedTime < 30){
@@ -425,7 +451,10 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             requestedMisses++;
         }
 
+        int[] A;
+
         dataset.data.remove(index);
+        return 0;
     }
 
     private void printResults(){
@@ -437,10 +466,36 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         int unHitFences = fenceLocations.size();
         int hitFences = totalNumberFences - unHitFences;
         double efficiency = 100.00 - (((double)requestedPoints/((double)requestedPoints + (double)unrequestedPoints))*100.00);
-        double accuracy = (hitFences/totalNumberFences) * 100;
+        double accuracy = ((double)hitFences/(double)totalNumberFences) * 100.00;
         System.out.println("Unhit fences:\t" + unHitFences);
         System.out.println("Accuracy:\t" + accuracy + "%");
         System.out.println("Efficiency:\t" + efficiency + "%");
+
+        SimpleDateFormat df = new SimpleDateFormat("HH 'hours', mm 'mins,' ss 'seconds'");
+        df.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+        System.out.println("Execution Time:\t" + getDurationBreakdown(duration));
+//        System.out.println("Execution Time:\t" + duration);
+    }
+
+    /**
+     * Convert a millisecond duration to a string format
+     *
+     * @param millis A duration to convert to a string form
+     * @return A string of the form "X Days Y Hours Z Minutes A Seconds B Milliseconds".
+     */
+    public static String getDurationBreakdown(long millis) {
+        if (millis < 0) {
+            throw new IllegalArgumentException("Duration must be greater than zero!");
+        }
+
+        long days = TimeUnit.MILLISECONDS.toDays(millis);
+        long hours = TimeUnit.MILLISECONDS.toHours(millis) % 24;
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis) % 60;
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millis) % 60;
+        long milliseconds = millis % 1000;
+
+        return String.format("%d Days %d Hours %d Minutes %d Seconds %d Milliseconds",
+                days, hours, minutes, seconds, milliseconds);
     }
 
     private MapMarker GetClosestRoutedFence(Coordinate loc, ArrayList<MapMarker> fenceLocations) {
