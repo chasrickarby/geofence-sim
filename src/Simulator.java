@@ -3,35 +3,29 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Cursor;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.apache.commons.io.FilenameUtils;
 import org.openstreetmap.gui.jmapviewer.*;
 import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
 import org.openstreetmap.gui.jmapviewer.interfaces.*;
-import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
-import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 
 import org.apache.http.*;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.apache.commons.io.IOUtils;
 
 import static java.lang.Math.*;
@@ -53,18 +47,37 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     private JLabel mperpLabelName;
     private JLabel mperpLabelValue;
 
-    private DataSet dataset;
-    private ArrayList<MapMarker> fenceLocations;
+    private static DataSet dataset;
+    private static ArrayList<MapMarker> fenceLocations;
     private Layer personOne;
     private JLabel helpLabel;
 
+    private static int cliNumberFences;
+    private static int cliNumberIterations;
+    private static String cliLog;
+    private static ArrayList<Coordinate> cliFenceLocations;
+    private static DataSet datasetCli;
+
     // For Results:
-    int unrequestedPoints = 0;
-    int requestedPoints = 0;
-    int totalNumberFences = 0;
-    int requestedHits = 0;
-    int requestedMisses = 0;
-    long duration = 0;
+    static int unrequestedPoints = 0;
+    static int requestedPoints = 0;
+    static int totalNumberFences = 0;
+    static int requestedHits = 0;
+    static int requestedMisses = 0;
+    static long duration = 0;
+
+    static int batchUnrequestedPoints = 0;
+    static int batchRequestedPoints = 0;
+    static int batchTotalNumberFences = 0;
+    static int batchRequestedHits = 0;
+    static int batchRequestedMisses = 0;
+    static long batchDuration = 0;
+    static int batchRuns = 0;
+    static int batchUnHitFences = 0;
+
+    static PrintStream stdout = System.out;
+
+    static boolean batchProcessing = false;
 
     /**
      * Constructs the {@code Simulator}.
@@ -124,7 +137,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         return dataset;
     }
 
-    private int GetRoutedTravelTime(Coordinate start, Coordinate end){
+    private static int GetRoutedTravelTime(Coordinate start, Coordinate end){
         DefaultHttpClient httpclient = new DefaultHttpClient();
         try {
             // specify the get request
@@ -158,7 +171,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     /*
     Based on a REST response gets the travel time (using routing) between two points, in seconds.
      */
-    private int GetTravelTime(HttpEntity response) throws IOException {
+    private static int GetTravelTime(HttpEntity response) throws IOException {
         StringWriter writer=new StringWriter();
         IOUtils.copy(response.getContent(),writer);
         String responseStr = writer.toString();
@@ -257,7 +270,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
                 }
                 long endTime = System.currentTimeMillis();
                 duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
-                printResults();
+                    printResults();
             }
         });
         panelBottom.add(plotRemainingButton);
@@ -302,6 +315,8 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     public static void main(String[] args) throws IOException {
         if(args.length > 0){
 
+            boolean done = false;
+            boolean isFile = false;
             // Arguments: <file or folder> <number of fences> <number of iterations> <log file>
 
             // Run in command line
@@ -313,11 +328,121 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             // Check for log location
             //      If no argument, just put a log.txt in the same directory as the data files
             // print results for every iteration before moving on to next file
+            while(!done){
+                if (args[0].equals("-h")){
+                    System.out.println("Arguments: <file or folder> <number of fences> <number of iterations (for a single file only)> <log file>");
+                }else{
+                    done = true;
+                    if(args[0].contains(".txt")){
+                        isFile = true;
+                    }else{
+                        isFile = false;
+                    }
+                    cliNumberFences = Integer.parseInt(args[1]);
+                    cliNumberIterations = Integer.parseInt(args[2]);
+                    if(!args[3].contains(".txt"))
+                    {
+                        cliLog = args[3] + "_" + args[0] + "_" + cliNumberFences + "Fences"  + ".txt";
+                    }else{
+                        cliLog = args[3].replace(".txt", "");
+                        String fileName = args[0].replace(".txt", "");
+                        fileName = fileName.replace("/", "-");
+                        cliLog = cliLog + "_" + fileName + "_" + cliNumberFences + "Fences_" + cliNumberIterations + "Iterations.txt";
+                    }
+
+                    File logFile = new File(cliLog);
+
+                    String baseName = FilenameUtils.getBaseName( logFile.getName() );
+                    String extension = FilenameUtils.getExtension( logFile.getName() );
+                    int counter = 1;
+                    while(logFile.exists())
+                    {
+                        logFile = new File( logFile.getParent(), baseName + "-" + (counter++) + "." + extension );
+                    }
+                    cliLog = logFile.getName();
+
+                    System.setOut(new PrintStream(cliLog));
+
+                    File f = new File(args[0]);
+
+                    if(isFile){
+                        if(cliNumberIterations > 1){
+                            batchProcessing = true;
+                        }
+
+                        for (int i = 0; i < cliNumberIterations; i++){
+                            System.out.println(f.getAbsolutePath());
+                            datasetCli = new DataSet(f.getAbsolutePath());
+                            runCLI(cliNumberFences);
+                        }
+                    }else{
+                        batchProcessing = true;
+                        FilenameFilter textFilter = new FilenameFilter() {
+                            public boolean accept(File dir, String name) {
+                                return name.toLowerCase().endsWith(".txt");
+                            }
+                        };
+
+                        File[] files = f.listFiles(textFilter);
+                        for (File file : files) {
+                            if (file.isDirectory()) {
+                                System.out.print("directory:");
+                            } else {
+                                System.out.print("     file:");
+                            }
+                            System.out.println(file.getCanonicalPath());
+                        }
+                    }
+
+
+                }
+            }
+
 
         }else{
             new Simulator().setVisible(true);
         }
     }
+
+    private static void runCLI(int numFences) throws FileNotFoundException {
+        
+        Random random = new Random(System.currentTimeMillis());
+
+        cliFenceLocations = new ArrayList<>();
+        totalNumberFences = numFences;
+
+        for (int i = 0; i < numFences; i++) {
+            int index = random.nextInt(datasetCli.data.size());
+
+            // Make sure none of the fences overlap
+            if(cliFenceLocations.size() > 0){
+                while (GetDistanceToClosestFenceFromCoords(datasetCli.data.get(index), cliFenceLocations) < 340){
+                    index = random.nextInt(datasetCli.data.size());
+                }
+            }
+
+            cliFenceLocations.add(datasetCli.data.get(index));
+        }
+
+        long startTime = System.currentTimeMillis();
+        while(datasetCli.data.size() > 0 && cliFenceLocations.size() > 0){
+            if(plotAPointCli() == 1){
+                return;
+            }
+        }
+        long endTime = System.currentTimeMillis();
+        duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
+        printResults();
+    }
+
+    private static Double GetDistanceToClosestFenceFromCoords(Coordinate coordinate, ArrayList<Coordinate> fenceLocs) {
+        ArrayList<Double> distances = new ArrayList<>();
+        for (Coordinate fence: fenceLocs) {
+            distances.add(getDistance(coordinate, fence));
+        }
+        return Collections.min(distances);
+    }
+
 
     /*
      * Calculate distance between two points in latitude and longitude taking
@@ -328,7 +453,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
      * el2 End altitude in meters
      * @returns Distance in Meters
      */
-    private double distance(double lat1, double lat2, double lon1,
+    private static double distance(double lat1, double lat2, double lon1,
                                   double lon2, double el1, double el2) {
 
         final int R = 6371; // Radius of the earth
@@ -355,12 +480,13 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
      * el2 End altitude in meters
      * @returns Distance in Meters
      */
-    private double getDistance(Coordinate coord1, Coordinate coord2){
+    private static double getDistance(Coordinate coord1, Coordinate coord2){
         return distance(coord1.getLat(), coord2.getLat(), coord1.getLon(),coord2.getLon(), 0, 0);
     }
 
     private void plotPoints(String filePath){
         DataSet ds = GetGPSData(filePath);
+        dataset = ds;
 
         personOne = new Layer("Person One");
         Random random = new Random(System.currentTimeMillis());
@@ -392,11 +518,75 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         return new Coordinate(closestRoutedFence.getCoordinate().getLat(),closestRoutedFence.getCoordinate().getLon());
     }
 
+    private static Coordinate GetClosestFenceCoordinateFromCoordinates(Coordinate coordinate, ArrayList<Coordinate> fenceLocs) {
+        Coordinate closestRoutedFence = GetClosestRoutedFenceFromCoordinates(coordinate, fenceLocs);
+
+        return closestRoutedFence;
+    }
+
+    private static Coordinate GetClosestRoutedFenceFromCoordinates(Coordinate loc, ArrayList<Coordinate> fenceLocations) {
+        Coordinate closestRoutedFence = fenceLocations.get(0);
+        int minimumTravelTime = GetRoutedTravelTime(loc, closestRoutedFence);
+        for (Coordinate fence:fenceLocations) {
+            int curTravelTime = GetRoutedTravelTime(loc, fence);
+            if(curTravelTime < minimumTravelTime){
+                minimumTravelTime = curTravelTime;
+                closestRoutedFence = fence;
+            }
+        }
+        return closestRoutedFence;
+    }
+
     private void updateZoomParameters() {
         if (mperpLabelValue != null)
             mperpLabelValue.setText(String.format("%s", map().getMeterPerPixel()));
         if (zoomValue != null)
             zoomValue.setText(String.format("%s", map().getZoom()));
+    }
+
+    private static int plotAPointCli(){
+        int index = 0;
+        if( datasetCli.data.size() == 0){
+            return 1;
+        }
+        Coordinate loc = datasetCli.data.get(index);
+        if(loc == null){
+            return 1;
+        }
+        Coordinate closestFenceLocation = GetClosestFenceCoordinateFromCoordinates(loc, cliFenceLocations);
+        int routedTime = GetRoutedTravelTime(loc, closestFenceLocation);
+        int marginOfError = (int)(routedTime * 0.25);
+
+        LocalDateTime newTime = LocalDateTime.from(loc.time.plusSeconds(routedTime - marginOfError));
+
+        try{
+            while(datasetCli.data.get(index).time.isBefore(newTime)){
+                loc = datasetCli.data.get(index);
+                unrequestedPoints++;
+                datasetCli.data.remove(index);
+            }
+        }catch(IndexOutOfBoundsException ex){
+            return 1;
+        }
+
+        loc = datasetCli.data.get(index);
+        routedTime = GetRoutedTravelTime(loc, closestFenceLocation);
+        if(routedTime < 30){
+            for (int i = 0; i < cliNumberFences; i++){
+                if(cliFenceLocations.get(i).getLat() == closestFenceLocation.getLat() && cliFenceLocations.get(i).getLon() == closestFenceLocation.getLon()){
+                    cliFenceLocations.remove(i);
+                    break;
+                }
+            }
+            requestedPoints++;
+            requestedHits++;
+        }else{
+            requestedPoints++;
+            requestedMisses++;
+        }
+
+        datasetCli.data.remove(index);
+        return 0;
     }
 
     private int plotAPoint(){
@@ -451,19 +641,22 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             requestedMisses++;
         }
 
-        int[] A;
-
         dataset.data.remove(index);
         return 0;
     }
 
-    private void printResults(){
-        System.out.println("\n\n- - - - - - - - - - - - - - - - - - - - - - - -\n\n");
+    private static void printResults(){
+        System.out.println("\n\n- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -\n\n");
+        batchRuns++;
         System.out.println("GPS points requested:\t" + requestedPoints);
+        batchRequestedPoints += requestedPoints;
         System.out.println("GPS points skipped:\t" + unrequestedPoints);
+        batchUnrequestedPoints += unrequestedPoints;
         System.out.println("Total number of GPS points:\t" + (requestedPoints + unrequestedPoints));
         System.out.println("Total number of fences:\t" + totalNumberFences);
-        int unHitFences = fenceLocations.size();
+        batchTotalNumberFences += totalNumberFences;
+        int unHitFences = cliFenceLocations.size();
+        batchUnHitFences += cliFenceLocations.size();
         int hitFences = totalNumberFences - unHitFences;
         double efficiency = 100.00 - (((double)requestedPoints/((double)requestedPoints + (double)unrequestedPoints))*100.00);
         double accuracy = ((double)hitFences/(double)totalNumberFences) * 100.00;
@@ -473,8 +666,26 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
 
         SimpleDateFormat df = new SimpleDateFormat("HH 'hours', mm 'mins,' ss 'seconds'");
         df.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+        batchDuration += duration;
         System.out.println("Execution Time:\t" + getDurationBreakdown(duration));
-//        System.out.println("Execution Time:\t" + duration);
+
+        if(batchProcessing){
+            System.out.println("\n\n- - - - - - - - - - - - - Batch results so far - - - - - - - - - - - - -\n\n");
+            System.out.println("GPS points requested:\t" + batchRequestedPoints);
+            System.out.println("GPS points skipped:\t" + batchUnrequestedPoints);
+            System.out.println("Total number of GPS points:\t" + (batchRequestedPoints + batchUnrequestedPoints));
+            System.out.println("Total number of fences:\t" + totalNumberFences);
+            int batchHitFences = batchTotalNumberFences - batchUnHitFences;
+            double batchEfficiency = 100.00 - (((double)batchRequestedPoints/((double)batchRequestedPoints + (double)batchUnrequestedPoints))*100.00);
+            double batchAccuracy = ((double)batchHitFences/(double)batchTotalNumberFences) * 100.00;
+            System.out.println("Unhit fences:\t" + batchUnHitFences);
+            System.out.println("Average Accuracy:\t" + batchAccuracy + "%");
+            System.out.println("Average Efficiency:\t" + batchEfficiency + "%");
+
+            SimpleDateFormat batchDf = new SimpleDateFormat("HH 'hours', mm 'mins,' ss 'seconds'");
+            df.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+            System.out.println("Total Execution Time:\t" + getDurationBreakdown(batchDuration));
+        }
     }
 
     /**
