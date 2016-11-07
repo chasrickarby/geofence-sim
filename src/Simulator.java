@@ -134,8 +134,8 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         totalNumberFences = 0;
         requestedHits = 0;
         requestedMisses = 0;
-        duration = 0;
         requestsFromRecords = 0;
+        cliFenceLocations.clear();
     }
 
     private DataSet GetGPSData(String filePath) {
@@ -386,7 +386,9 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
                         cliNumberIterations = 1;
                         if(args[2].equals("ascend")){
 
-                            for (int n = 12; n <= 96; n+=6){
+                            ArrayList<Coordinate> useOnlyTheseFences = new ArrayList<>();
+
+                            for (int n = 0; n <= 96; n+=6){
                                 if(!args[3].contains(".txt"))
                                 {
                                     cliLog = args[3] + "_" + args[0] + "_" + cliNumberFences + "Fences_" + cliNumberIterations + "Iterations_Every<" + n + ">thPoint.txt";
@@ -419,6 +421,14 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
                                 for (int i = 0; i < cliNumberIterations; i++){
                                     System.out.println(f.getAbsolutePath());
                                     datasetCli = new DataSet(f.getAbsolutePath(), n);
+                                    if(n==0){
+                                        cliCreateFences(cliNumberFences);
+                                        useOnlyTheseFences = new ArrayList<Coordinate>(cliFenceLocations);
+                                        totalNumberFences = cliFenceLocations.size();
+                                    }else{
+                                        cliFenceLocations = new ArrayList<Coordinate>(useOnlyTheseFences);
+                                        totalNumberFences = cliFenceLocations.size();
+                                    }
                                     db.dbOpenTable(f.getName());
                                     System.out.println("EVERY Nth Point: " + n);
 
@@ -554,8 +564,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         }
     }
 
-    private static void runCLI(int numFences) throws FileNotFoundException {
-        
+    private static void cliCreateFences(int numFences){
         Random random = new Random(System.currentTimeMillis());
 
         cliFenceLocations = new ArrayList<>();
@@ -572,8 +581,17 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             }
 
             cliFenceLocations.add(datasetCli.data.get(index));
-            System.out.println("Num Fences Generated: \t" + cliFenceLocations.size());
+            //System.out.println("Num Fences Generated: \t" + cliFenceLocations.size());
         }
+    }
+
+    private static void runCLI(int numFences) throws FileNotFoundException {
+
+        if(cliFenceLocations.size() == 0){
+            cliCreateFences(numFences);
+        }
+
+        System.out.println(cliFenceLocations);
 
         long startTime = System.currentTimeMillis();
         while(datasetCli.data.size() > 0 && cliFenceLocations.size() > 0){
@@ -682,7 +700,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         ArrayList<Coordinate> lessFences = new ArrayList<>(fenceLocations);   /* Array list to contain the group of fewer fences,
                                                                    sampled from the original list based upon as the crow
                                                                    flies distance*/
-        while (lessFences.size() > fenceLocations.size() * .80){
+        while (lessFences.size() > fenceLocations.size() * .80 && fenceLocations.size() > 5){
             RemoveFurthestFence(loc, lessFences);
         }
 
