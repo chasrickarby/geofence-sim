@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Cursor;
 import java.io.*;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -19,6 +20,8 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.openstreetmap.gui.jmapviewer.*;
 import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
 import org.openstreetmap.gui.jmapviewer.interfaces.*;
@@ -58,6 +61,8 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     private static ArrayList<Coordinate> cliFenceLocations;
     private static DataSet datasetCli;
 
+    private static Database db;
+
     // For Results:
     static int unrequestedPoints = 0;
     static int requestedPoints = 0;
@@ -65,6 +70,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     static int requestedHits = 0;
     static int requestedMisses = 0;
     static long duration = 0;
+    static int requestsFromRecords = 0;
 
     static int batchUnrequestedPoints = 0;
     static int batchRequestedPoints = 0;
@@ -122,6 +128,16 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         return Collections.min(distances);
     }
 
+    private static void ResetResultCounts(){
+        unrequestedPoints = 0;
+        requestedPoints = 0;
+        totalNumberFences = 0;
+        requestedHits = 0;
+        requestedMisses = 0;
+        duration = 0;
+        requestsFromRecords = 0;
+    }
+
     private DataSet GetGPSData(String filePath) {
 
         System.out.println("Attempting to read in data...");
@@ -138,20 +154,31 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     }
 
     private static int GetRoutedTravelTime(Coordinate start, Coordinate end){
-        DefaultHttpClient httpclient = new DefaultHttpClient();
+
+        int recordedTravelTime = QueryFromDataBase(start, end);
+        if(recordedTravelTime != -1){
+            requestsFromRecords++;
+            return recordedTravelTime;
+        }
+
+        HttpClient httpclient = HttpClientBuilder.create().build();
+
         try {
             // specify the get request
             HttpGet getRequest = new HttpGet("http://dev.virtualearth.net/REST/V1/Routes/Driving" +
                     "?wp.0=" + start.getLat() + "," + start.getLon() +
                     "&wp.1=" + end.getLat() + "," + end.getLon() +
                     "&ra=routeSummariesOnly" +
-                    "&key=Ah2BJh4cdLWewXKf-u5I98pNrwtZz6JJxfCnbC-5M4GTBeHKDbQdzxtOP8yypEmU");
+                    "&key=AlSHOWTOgbz4W37Rb0tBwp_iu1et9WTnTEmHJ6_AWsO33U1L8M3I-wbdrhnsJHk7");
 
             HttpResponse httpResponse = httpclient.execute(getRequest);
             HttpEntity entity = httpResponse.getEntity();
 
             if (entity != null) {
-                return GetTravelTime(entity);
+                int travelTime = GetTravelTime(entity);
+                String newData = "VALUES(" + start.getLat() +"," + start.getLon() + "," + end.getLat() +"," + end.getLon() + "," + travelTime + ")";
+                db.dbInsertEntry(newData);
+                return travelTime;
             }else{
                 JOptionPane.showMessageDialog(null, "Something went wrong, could not request route information",
                         "InfoBox: " + "Uh Oh.", JOptionPane.INFORMATION_MESSAGE);
@@ -166,6 +193,16 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             httpclient.getConnectionManager().shutdown();
         }
         return 0;
+    }
+
+    private static int QueryFromDataBase(Coordinate start, Coordinate end) {
+        int travelTime = 0;
+        try {
+            travelTime = db.executeTravelTimeQuery(start, end);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return travelTime;
     }
 
     /*
@@ -312,12 +349,12 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     /**
      * @param args Main program arguments
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
         if(args.length > 0){
 
             boolean done = false;
             boolean isFile = false;
-            // Arguments: <file or folder> <number of fences> <number of iterations> <log file>
+            // Arguments: <file or folder> <number of fences> <number of iterations> <log file> <trim data>
 
             // Run in command line
             // Check for .txt
@@ -330,7 +367,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             // print results for every iteration before moving on to next file
             while(!done){
                 if (args[0].equals("-h")){
-                    System.out.println("Arguments: <file or folder> <number of fences> <number of iterations (for a single file only)> <log file>");
+                    System.out.println("Arguments: <file or folder> <number of fences> <number of iterations (for a single file only)> <log file> <only use every nth data point>");
                 }else{
                     done = true;
                     if(args[0].contains(".txt")){
@@ -338,8 +375,107 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
                     }else{
                         isFile = false;
                     }
+
+                    db = new Database();
+                    System.out.println("Created DB Object");
+
                     cliNumberFences = Integer.parseInt(args[1]);
-                    cliNumberIterations = Integer.parseInt(args[2]);
+                    try{
+                        cliNumberIterations = Integer.parseInt(args[2]);
+                    }catch(Exception ex){
+                        cliNumberIterations = 1;
+                        if(args[2].equals("ascend")){
+
+                            for (int n = 12; n <= 96; n+=6){
+                                if(!args[3].contains(".txt"))
+                                {
+                                    cliLog = args[3] + "_" + args[0] + "_" + cliNumberFences + "Fences_" + cliNumberIterations + "Iterations_Every<" + n + ">thPoint.txt";
+                                }else{
+                                    cliLog = args[3].replace(".txt", "");
+                                    String fileName = args[0].replace(".txt", "");
+                                    fileName = fileName.replace("/", "-");
+                                    cliLog = cliLog + "_" + fileName + "_" + cliNumberFences + "Fences_" + cliNumberIterations + "Iterations_Every<" + n + ">thPoint.txt";
+                                }
+
+                                File logFile = new File(cliLog);
+
+                                String baseName = FilenameUtils.getBaseName( logFile.getName() );
+                                String extension = FilenameUtils.getExtension( logFile.getName() );
+                                int counter = 1;
+                                while(logFile.exists())
+                                {
+                                    logFile = new File( logFile.getParent(), baseName + "-" + (counter++) + "." + extension );
+                                }
+                                cliLog = logFile.getName();
+
+                                System.setOut(new PrintStream(cliLog));
+
+                                File f = new File(args[0]);
+
+                                if(cliNumberIterations > 1){
+                                    batchProcessing = true;
+                                }
+
+                                for (int i = 0; i < cliNumberIterations; i++){
+                                    System.out.println(f.getAbsolutePath());
+                                    datasetCli = new DataSet(f.getAbsolutePath(), n);
+                                    db.dbOpenTable(f.getName());
+                                    System.out.println("EVERY Nth Point: " + n);
+
+                                    runCLI(cliNumberFences);
+                                }
+                                printResults();
+                            }
+
+                            return;
+                        }else if (args[2].equals("ascendfences")){
+                            for (int n = 100; n <= 100; n+=5){
+                                cliNumberFences = n;
+                                if(!args[3].contains(".txt"))
+                                {
+                                    cliLog = args[3] + "_" + args[0] + "_" + cliNumberFences + "Fences_" + cliNumberIterations + "Iterations_IncreasingFences.txt";
+                                }else{
+                                    cliLog = args[3].replace(".txt", "");
+                                    String fileName = args[0].replace(".txt", "");
+                                    fileName = fileName.replace("/", "-");
+                                    cliLog = cliLog + "_" + fileName + "_" + cliNumberFences + "Fences_" + cliNumberIterations + "Iterations_IncreasingFences.txt";
+                                }
+
+                                File logFile = new File(cliLog);
+
+                                String baseName = FilenameUtils.getBaseName( logFile.getName() );
+                                String extension = FilenameUtils.getExtension( logFile.getName() );
+                                int counter = 1;
+                                while(logFile.exists())
+                                {
+                                    logFile = new File( logFile.getParent(), baseName + "-" + (counter++) + "." + extension );
+                                }
+                                cliLog = logFile.getName();
+
+                                System.setOut(new PrintStream(cliLog));
+
+                                File f = new File(args[0]);
+
+                                if(cliNumberIterations > 1){
+                                    batchProcessing = true;
+                                }
+
+                                for (int i = 0; i < cliNumberIterations; i++){
+                                    System.out.println(f.getAbsolutePath());
+                                    datasetCli = new DataSet(f.getAbsolutePath());
+                                    db.dbOpenTable(f.getName());
+
+                                    runCLI(cliNumberFences);
+                                }
+                                printResults();
+                            }
+
+                            return;
+                        }else{
+                            return;
+                        }
+                    }
+
                     if(!args[3].contains(".txt"))
                     {
                         cliLog = args[3] + "_" + args[0] + "_" + cliNumberFences + "Fences"  + ".txt";
@@ -372,7 +508,14 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
 
                         for (int i = 0; i < cliNumberIterations; i++){
                             System.out.println(f.getAbsolutePath());
-                            datasetCli = new DataSet(f.getAbsolutePath());
+                            if(args.length == 5){
+                                datasetCli = new DataSet(f.getAbsolutePath(), Integer.valueOf(args[4]));
+                                db.dbOpenTable(f.getName());
+                                System.out.println("EVERY Nth Point: " + args[4]);
+                            }else{
+                                datasetCli = new DataSet(f.getAbsolutePath());
+                                db.dbOpenTable(f.getName());
+                            }
                             runCLI(cliNumberFences);
                         }
                     }else{
@@ -385,14 +528,21 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
 
                         File[] files = f.listFiles(textFilter);
                         for (File file : files) {
-                            if (file.isDirectory()) {
-                                System.out.print("directory:");
-                            } else {
-                                System.out.print("     file:");
+                            System.out.println(file.getAbsolutePath());
+                            if(args[4].equals("y")){
+                                datasetCli = new DataSet(f.getAbsolutePath(), Integer.valueOf(args[4]));
+                                db.dbOpenTable(f.getName());
+                                System.out.println("EVERY Nth Point: " + args[4]);
+                            }else{
+                                datasetCli = new DataSet(file.getAbsolutePath());
+                                db.dbOpenTable(f.getName());
                             }
-                            System.out.println(file.getCanonicalPath());
+
+
+                            runCLI(cliNumberFences);
                         }
                     }
+                    printResults();
 
 
                 }
@@ -416,17 +566,19 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
 
             // Make sure none of the fences overlap
             if(cliFenceLocations.size() > 0){
-                while (GetDistanceToClosestFenceFromCoords(datasetCli.data.get(index), cliFenceLocations) < 340){
+                while (GetDistanceToClosestFenceFromCoords(datasetCli.data.get(index), cliFenceLocations) < 75){
                     index = random.nextInt(datasetCli.data.size());
                 }
             }
 
             cliFenceLocations.add(datasetCli.data.get(index));
+            System.out.println("Num Fences Generated: \t" + cliFenceLocations.size());
         }
 
         long startTime = System.currentTimeMillis();
         while(datasetCli.data.size() > 0 && cliFenceLocations.size() > 0){
             if(plotAPointCli() == 1){
+                printResults();
                 return;
             }
         }
@@ -525,9 +677,19 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     }
 
     private static Coordinate GetClosestRoutedFenceFromCoordinates(Coordinate loc, ArrayList<Coordinate> fenceLocations) {
+
         Coordinate closestRoutedFence = fenceLocations.get(0);
+        ArrayList<Coordinate> lessFences = new ArrayList<>(fenceLocations);   /* Array list to contain the group of fewer fences,
+                                                                   sampled from the original list based upon as the crow
+                                                                   flies distance*/
+        while (lessFences.size() > fenceLocations.size() * .80){
+            RemoveFurthestFence(loc, lessFences);
+        }
+
+        closestRoutedFence = fenceLocations.get(0);
         int minimumTravelTime = GetRoutedTravelTime(loc, closestRoutedFence);
-        for (Coordinate fence:fenceLocations) {
+
+        for (Coordinate fence:lessFences) {
             int curTravelTime = GetRoutedTravelTime(loc, fence);
             if(curTravelTime < minimumTravelTime){
                 minimumTravelTime = curTravelTime;
@@ -535,6 +697,20 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             }
         }
         return closestRoutedFence;
+    }
+
+    private static void RemoveFurthestFence(Coordinate coordinate, ArrayList<Coordinate> fenceLocs) {
+        ArrayList<Double> distances = new ArrayList<>();
+        int maxDistance = 0;
+        int maxIndex = 0;
+        int i = 0;
+        for (Coordinate fence: fenceLocs) {
+            if(getDistance(coordinate, fence) > maxDistance){
+                maxIndex = i;
+            }
+            i++;
+        }
+        fenceLocs.remove(maxIndex);
     }
 
     private void updateZoomParameters() {
@@ -575,6 +751,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             for (int i = 0; i < cliNumberFences; i++){
                 if(cliFenceLocations.get(i).getLat() == closestFenceLocation.getLat() && cliFenceLocations.get(i).getLon() == closestFenceLocation.getLon()){
                     cliFenceLocations.remove(i);
+                    System.out.println("Fence Hit! Fences Remaining: " + cliFenceLocations.size());
                     break;
                 }
             }
@@ -663,6 +840,8 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         System.out.println("Unhit fences:\t" + unHitFences);
         System.out.println("Accuracy:\t" + accuracy + "%");
         System.out.println("Efficiency:\t" + efficiency + "%");
+        System.out.println("\nRequests from database: \t" + requestsFromRecords);
+        System.out.println("Requests from API: \t" + ((requestedPoints + unrequestedPoints) - requestsFromRecords) + "\n");
 
         SimpleDateFormat df = new SimpleDateFormat("HH 'hours', mm 'mins,' ss 'seconds'");
         df.setTimeZone(TimeZone.getTimeZone("GMT+0"));
@@ -686,6 +865,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
             df.setTimeZone(TimeZone.getTimeZone("GMT+0"));
             System.out.println("Total Execution Time:\t" + getDurationBreakdown(batchDuration));
         }
+        ResetResultCounts();
     }
 
     /**

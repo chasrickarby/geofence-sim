@@ -1,0 +1,229 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+Num Fences Generated: 	1
+Num Fences Generated: 	2
+Num Fences Generated: 	3
+Num Fences Generated: 	4
+Num Fences Generated: 	5
+Num Fences Generated: 	6
+Num Fences Generated: 	7
+Num Fences Generated: 	8
+Num Fences Generated: 	9
+Num Fences Generated: 	10
+Num Fences Generated: 	11
+Num Fences Generated: 	12
+Num Fences Generated: 	13
+Num Fences Generated: 	14
+Num Fences Generated: 	15
+Num Fences Generated: 	16
+Num Fences Generated: 	17
+Num Fences Generated: 	18
+Num Fences Generated: 	19
+Num Fences Generated: 	20
+Num Fences Generated: 	21
+Num Fences Generated: 	22
+Num Fences Generated: 	23
+Num Fences Generated: 	24
+Num Fences Generated: 	25
+Num Fences Generated: 	26
+Num Fences Generated: 	27
+Num Fences Generated: 	28
+Num Fences Generated: 	29
+Num Fences Generated: 	30
+Num Fences Generated: 	31
+Num Fences Generated: 	32
+Num Fences Generated: 	33
+Num Fences Generated: 	34
+Num Fences Generated: 	35
+Num Fences Generated: 	36
+Num Fences Generated: 	37
+Num Fences Generated: 	38
+Num Fences Generated: 	39
+Num Fences Generated: 	40
+Num Fences Generated: 	41
+Num Fences Generated: 	42
+Num Fences Generated: 	43
+Num Fences Generated: 	44
+Num Fences Generated: 	45
+Num Fences Generated: 	46
+Num Fences Generated: 	47
+Num Fences Generated: 	48
+Num Fences Generated: 	49
+Num Fences Generated: 	50
+Num Fences Generated: 	51
+Num Fences Generated: 	52
+Num Fences Generated: 	53
+Num Fences Generated: 	54
+Num Fences Generated: 	55
+Num Fences Generated: 	56
+Num Fences Generated: 	57
+Num Fences Generated: 	58
+Num Fences Generated: 	59
+Num Fences Generated: 	60
+Num Fences Generated: 	61
+Num Fences Generated: 	62
+Num Fences Generated: 	63
+Num Fences Generated: 	64
+Num Fences Generated: 	65
+Num Fences Generated: 	66
+Num Fences Generated: 	67
+Num Fences Generated: 	68
+Num Fences Generated: 	69
+Num Fences Generated: 	70
+Num Fences Generated: 	71
+Num Fences Generated: 	72
+Num Fences Generated: 	73
+Num Fences Generated: 	74
+Num Fences Generated: 	75
+Num Fences Generated: 	76
+Num Fences Generated: 	77
+Num Fences Generated: 	78
+Num Fences Generated: 	79
+Num Fences Generated: 	80
+Num Fences Generated: 	81
+Num Fences Generated: 	82
+Num Fences Generated: 	83
+Num Fences Generated: 	84
+Num Fences Generated: 	85
+Num Fences Generated: 	86
+Num Fences Generated: 	87
+Num Fences Generated: 	88
+Num Fences Generated: 	89
+Num Fences Generated: 	90
+Num Fences Generated: 	91
+Num Fences Generated: 	92
+Num Fences Generated: 	93
+Num Fences Generated: 	94
+Num Fences Generated: 	95
+Num Fences Generated: 	96
+Num Fences Generated: 	97
+Num Fences Generated: 	98
+Num Fences Generated: 	99
+Num Fences Generated: 	100
+Fence Hit! Fences Remaining: 99
+Fence Hit! Fences Remaining: 98
+Fence Hit! Fences Remaining: 97
+Fence Hit! Fences Remaining: 96
+Fence Hit! Fences Remaining: 95
+Fence Hit! Fences Remaining: 94
+Fence Hit! Fences Remaining: 93
+Fence Hit! Fences Remaining: 92
+Fence Hit! Fences Remaining: 91
+Fence Hit! Fences Remaining: 90
+Fence Hit! Fences Remaining: 89
+Fence Hit! Fences Remaining: 88
+Fence Hit! Fences Remaining: 87
+Fence Hit! Fences Remaining: 86
+Fence Hit! Fences Remaining: 85
+Fence Hit! Fences Remaining: 84
+Fence Hit! Fences Remaining: 83
+Fence Hit! Fences Remaining: 82
+Fence Hit! Fences Remaining: 81
+Fence Hit! Fences Remaining: 80
+Fence Hit! Fences Remaining: 79
+Fence Hit! Fences Remaining: 78
+Fence Hit! Fences Remaining: 77
+Fence Hit! Fences Remaining: 76
+Fence Hit! Fences Remaining: 75
+Fence Hit! Fences Remaining: 74
+Fence Hit! Fences Remaining: 73
+Fence Hit! Fences Remaining: 72
+Fence Hit! Fences Remaining: 71
+Fence Hit! Fences Remaining: 70
+Fence Hit! Fences Remaining: 69
+Fence Hit! Fences Remaining: 68
+Fence Hit! Fences Remaining: 67
+Fence Hit! Fences Remaining: 66
+Fence Hit! Fences Remaining: 65
+Fence Hit! Fences Remaining: 64
+Fence Hit! Fences Remaining: 63
+Fence Hit! Fences Remaining: 62
+Fence Hit! Fences Remaining: 61
+Fence Hit! Fences Remaining: 60
+Fence Hit! Fences Remaining: 59
+Fence Hit! Fences Remaining: 58
+Fence Hit! Fences Remaining: 57
+Fence Hit! Fences Remaining: 56
+Fence Hit! Fences Remaining: 55
+Fence Hit! Fences Remaining: 54
+Fence Hit! Fences Remaining: 53
+Fence Hit! Fences Remaining: 52
+Fence Hit! Fences Remaining: 51
+Fence Hit! Fences Remaining: 50
+Fence Hit! Fences Remaining: 49
+Fence Hit! Fences Remaining: 48
+Fence Hit! Fences Remaining: 47
+Fence Hit! Fences Remaining: 46
+Fence Hit! Fences Remaining: 45
+Fence Hit! Fences Remaining: 44
+Fence Hit! Fences Remaining: 43
+Fence Hit! Fences Remaining: 42
+Fence Hit! Fences Remaining: 41
+Fence Hit! Fences Remaining: 40
+Fence Hit! Fences Remaining: 39
+Fence Hit! Fences Remaining: 38
+Fence Hit! Fences Remaining: 37
+Fence Hit! Fences Remaining: 36
+Fence Hit! Fences Remaining: 35
+Fence Hit! Fences Remaining: 34
+Fence Hit! Fences Remaining: 33
+Fence Hit! Fences Remaining: 32
+Fence Hit! Fences Remaining: 31
+Fence Hit! Fences Remaining: 30
+Fence Hit! Fences Remaining: 29
+Fence Hit! Fences Remaining: 28
+Fence Hit! Fences Remaining: 27
+Fence Hit! Fences Remaining: 26
+Fence Hit! Fences Remaining: 25
+Fence Hit! Fences Remaining: 24
+Fence Hit! Fences Remaining: 23
+Fence Hit! Fences Remaining: 22
+Fence Hit! Fences Remaining: 21
+Fence Hit! Fences Remaining: 20
+Fence Hit! Fences Remaining: 19
+Fence Hit! Fences Remaining: 18
+Fence Hit! Fences Remaining: 17
+Fence Hit! Fences Remaining: 16
+Fence Hit! Fences Remaining: 15
+Fence Hit! Fences Remaining: 14
+Fence Hit! Fences Remaining: 13
+Fence Hit! Fences Remaining: 12
+Fence Hit! Fences Remaining: 11
+Fence Hit! Fences Remaining: 10
+Fence Hit! Fences Remaining: 9
+Fence Hit! Fences Remaining: 8
+Fence Hit! Fences Remaining: 7
+Fence Hit! Fences Remaining: 6
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	400
+GPS points skipped:	5666
+Total number of GPS points:	6066
+Total number of fences:	100
+Unhit fences:	6
+Accuracy:	94.0%
+Efficiency:	93.40586877678865%
+
+Requests from database: 	3514
+Requests from API: 	2552
+
+Execution Time:	0 Days 0 Hours 0 Minutes 0 Seconds 0 Milliseconds
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	0
+GPS points skipped:	0
+Total number of GPS points:	0
+Total number of fences:	0
+Unhit fences:	6
+Accuracy:	-Infinity%
+Efficiency:	NaN%
+
+Requests from database: 	0
+Requests from API: 	0
+
+Execution Time:	0 Days 0 Hours 0 Minutes 0 Seconds 0 Milliseconds

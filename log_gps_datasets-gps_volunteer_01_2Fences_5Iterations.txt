@@ -1,0 +1,150 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+EVERY Nth Point: 12
+Fence Hit! Fences Remaining: 1
+Fence Hit! Fences Remaining: 0
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	23
+GPS points skipped:	41
+Total number of GPS points:	64
+Total number of fences:	2
+Unhit fences:	0
+Accuracy:	100.0%
+Efficiency:	64.0625%
+Execution Time:	0 Days 0 Hours 0 Minutes 22 Seconds 909 Milliseconds
+
+
+- - - - - - - - - - - - - Batch results so far - - - - - - - - - - - - -
+
+
+GPS points requested:	23
+GPS points skipped:	41
+Total number of GPS points:	64
+Total number of fences:	2
+Unhit fences:	0
+Average Accuracy:	100.0%
+Average Efficiency:	64.0625%
+Total Execution Time:	0 Days 0 Hours 0 Minutes 22 Seconds 909 Milliseconds
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+EVERY Nth Point: 12
+Fence Hit! Fences Remaining: 1
+Fence Hit! Fences Remaining: 0
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	35
+GPS points skipped:	77
+Total number of GPS points:	112
+Total number of fences:	2
+Unhit fences:	0
+Accuracy:	100.0%
+Efficiency:	68.75%
+Execution Time:	0 Days 0 Hours 0 Minutes 8 Seconds 16 Milliseconds
+
+
+- - - - - - - - - - - - - Batch results so far - - - - - - - - - - - - -
+
+
+GPS points requested:	58
+GPS points skipped:	118
+Total number of GPS points:	176
+Total number of fences:	2
+Unhit fences:	0
+Average Accuracy:	100.0%
+Average Efficiency:	67.04545454545455%
+Total Execution Time:	0 Days 0 Hours 0 Minutes 30 Seconds 925 Milliseconds
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+EVERY Nth Point: 12
+Fence Hit! Fences Remaining: 1
+Fence Hit! Fences Remaining: 0
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	42
+GPS points skipped:	108
+Total number of GPS points:	150
+Total number of fences:	2
+Unhit fences:	0
+Accuracy:	100.0%
+Efficiency:	72.0%
+Execution Time:	0 Days 0 Hours 0 Minutes 4 Seconds 815 Milliseconds
+
+
+- - - - - - - - - - - - - Batch results so far - - - - - - - - - - - - -
+
+
+GPS points requested:	100
+GPS points skipped:	226
+Total number of GPS points:	326
+Total number of fences:	2
+Unhit fences:	0
+Average Accuracy:	100.0%
+Average Efficiency:	69.32515337423312%
+Total Execution Time:	0 Days 0 Hours 0 Minutes 35 Seconds 740 Milliseconds
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+EVERY Nth Point: 12
+Fence Hit! Fences Remaining: 1
+Fence Hit! Fences Remaining: 0
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	87
+GPS points skipped:	213
+Total number of GPS points:	300
+Total number of fences:	2
+Unhit fences:	0
+Accuracy:	100.0%
+Efficiency:	71.0%
+Execution Time:	0 Days 0 Hours 0 Minutes 26 Seconds 62 Milliseconds
+
+
+- - - - - - - - - - - - - Batch results so far - - - - - - - - - - - - -
+
+
+GPS points requested:	187
+GPS points skipped:	439
+Total number of GPS points:	626
+Total number of fences:	2
+Unhit fences:	0
+Average Accuracy:	100.0%
+Average Efficiency:	70.12779552715655%
+Total Execution Time:	0 Days 0 Hours 1 Minutes 1 Seconds 802 Milliseconds
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+EVERY Nth Point: 12
+Fence Hit! Fences Remaining: 1
+Fence Hit! Fences Remaining: 0
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	166
+GPS points skipped:	539
+Total number of GPS points:	705
+Total number of fences:	2
+Unhit fences:	0
+Accuracy:	100.0%
+Efficiency:	76.45390070921985%
+Execution Time:	0 Days 0 Hours 1 Minutes 24 Seconds 383 Milliseconds
+
+
+- - - - - - - - - - - - - Batch results so far - - - - - - - - - - - - -
+
+
+GPS points requested:	353
+GPS points skipped:	978
+Total number of GPS points:	1331
+Total number of fences:	2
+Unhit fences:	0
+Average Accuracy:	100.0%
+Average Efficiency:	73.4785875281743%
+Total Execution Time:	0 Days 0 Hours 2 Minutes 26 Seconds 185 Milliseconds

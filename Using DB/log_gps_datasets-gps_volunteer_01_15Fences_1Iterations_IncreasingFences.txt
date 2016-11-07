@@ -1,0 +1,47 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+Fence Hit! Fences Remaining: 14
+Fence Hit! Fences Remaining: 13
+Fence Hit! Fences Remaining: 12
+Fence Hit! Fences Remaining: 11
+Fence Hit! Fences Remaining: 10
+Fence Hit! Fences Remaining: 9
+Fence Hit! Fences Remaining: 8
+Fence Hit! Fences Remaining: 7
+Fence Hit! Fences Remaining: 6
+Fence Hit! Fences Remaining: 5
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	194
+GPS points skipped:	5872
+Total number of GPS points:	6066
+Total number of fences:	15
+Unhit fences:	3
+Accuracy:	80.0%
+Efficiency:	96.8018463567425%
+
+Requests from database: 	439
+Requests from API: 	5627
+
+Execution Time:	0 Days 0 Hours 0 Minutes 0 Seconds 0 Milliseconds
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	0
+GPS points skipped:	0
+Total number of GPS points:	0
+Total number of fences:	0
+Unhit fences:	3
+Accuracy:	-Infinity%
+Efficiency:	NaN%
+
+Requests from database: 	0
+Requests from API: 	0
+
+Execution Time:	0 Days 0 Hours 0 Minutes 0 Seconds 0 Milliseconds

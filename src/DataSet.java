@@ -38,6 +38,44 @@ public class DataSet {
         br.close();
     }
 
+    public DataSet(String filePath, int trim) throws IOException{
+
+        data = new ArrayList<>();
+        fences = new ArrayList<>();
+
+        // Construct BufferedReader from FileReader
+        BufferedReader br = new BufferedReader(new FileReader(filePath));
+
+        String line = null;
+
+        int cnt = 0;
+
+        while ((line = br.readLine()) != null) {
+            if(trim == 0){
+                if(line.contains("Date (month/day/year)")){
+                    continue;
+                }else if(line.contains("fences:")){
+                    getFences(br, fences);
+                    break;
+                }
+                String[] curLine = line.split("\\t");
+                data.add(new Coordinate(Double.parseDouble(curLine[2]), Double.parseDouble(curLine[3]), curLine[0] + " " + curLine[1]));
+            } else if(cnt % trim == 0){
+                if(line.contains("Date (month/day/year)")){
+                    continue;
+                }else if(line.contains("fences:")){
+                    getFences(br, fences);
+                    break;
+                }
+                String[] curLine = line.split("\\t");
+                data.add(new Coordinate(Double.parseDouble(curLine[2]), Double.parseDouble(curLine[3]), curLine[0] + " " + curLine[1]));
+            }
+            cnt++;
+        }
+
+        br.close();
+    }
+
     private void getFences(BufferedReader br, List<Fence> fences) throws IOException {
         String line = null;
         while ((line = br.readLine()) != null) {
