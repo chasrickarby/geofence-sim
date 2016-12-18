@@ -1,0 +1,55 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+[Coordinate[47.61748, -122.32162], Coordinate[47.63805, -122.3261], Coordinate[47.61992, -122.33362], Coordinate[47.64022, -122.32015], Coordinate[47.61573, -122.3216], Coordinate[47.63813, -122.32003], Coordinate[47.62238, -122.31987], Coordinate[47.61657, -122.32308], Coordinate[47.6387, -122.3228], Coordinate[47.61413, -122.32213], Coordinate[47.6193, -122.33318], Coordinate[47.61485, -122.31837], Coordinate[47.62895, -122.32038], Coordinate[47.61863, -122.32085], Coordinate[47.61755, -122.32043], Coordinate[47.62475, -122.32088], Coordinate[47.61853, -122.33278], Coordinate[47.6164, -122.32133], Coordinate[47.6166, -122.31822], Coordinate[47.62475, -122.33445]]
+Fence Hit! Fences Remaining: 19
+Fence Hit! Fences Remaining: 18
+Fence Hit! Fences Remaining: 17
+Fence Hit! Fences Remaining: 16
+Fence Hit! Fences Remaining: 15
+Fence Hit! Fences Remaining: 14
+Fence Hit! Fences Remaining: 13
+Fence Hit! Fences Remaining: 12
+Fence Hit! Fences Remaining: 11
+Fence Hit! Fences Remaining: 10
+Fence Hit! Fences Remaining: 9
+Fence Hit! Fences Remaining: 8
+Fence Hit! Fences Remaining: 7
+Fence Hit! Fences Remaining: 6
+Fence Hit! Fences Remaining: 5
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3
+Fence Hit! Fences Remaining: 2
+Fence Hit! Fences Remaining: 1
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	262
+GPS points skipped:	5804
+Total number of GPS points:	6066
+Total number of fences:	20
+Unhit fences:	1
+Accuracy:	95.0%
+Efficiency:	95.68084404879657%
+
+Requests from database: 	1770
+Requests from API: 	4296
+
+Execution Time:	0 Days 0 Hours 0 Minutes 47 Seconds 816 Milliseconds
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	0
+GPS points skipped:	0
+Total number of GPS points:	0
+Total number of fences:	0
+Unhit fences:	0
+Accuracy:	NaN%
+Efficiency:	NaN%
+
+Requests from database: 	0
+Requests from API: 	0
+
+Execution Time:	0 Days 0 Hours 0 Minutes 47 Seconds 816 Milliseconds

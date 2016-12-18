@@ -1,0 +1,54 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_02.txt
+[Coordinate[47.61398, -122.32065], Coordinate[47.6183, -122.1587], Coordinate[47.61425, -122.31965], Coordinate[47.61268, -122.31668], Coordinate[47.61425, -122.31842], Coordinate[47.61328, -122.322], Coordinate[47.61347, -122.31742], Coordinate[47.61737, -122.18382], Coordinate[47.65152, -122.35612], Coordinate[47.59787, -122.31302], Coordinate[47.62903, -122.30735], Coordinate[47.5841, -122.1889], Coordinate[47.65982, -122.33618], Coordinate[47.5956, -122.31123], Coordinate[47.61343, -122.31862], Coordinate[47.61678, -122.20487], Coordinate[47.60492, -122.19882], Coordinate[47.67523, -122.14213], Coordinate[47.58648, -122.3887], Coordinate[47.69382, -122.1173]]
+Fence Hit! Fences Remaining: 19
+Fence Hit! Fences Remaining: 18
+Fence Hit! Fences Remaining: 17
+Fence Hit! Fences Remaining: 16
+Fence Hit! Fences Remaining: 15
+Fence Hit! Fences Remaining: 14
+Fence Hit! Fences Remaining: 13
+Fence Hit! Fences Remaining: 12
+Fence Hit! Fences Remaining: 11
+Fence Hit! Fences Remaining: 10
+Fence Hit! Fences Remaining: 9
+Fence Hit! Fences Remaining: 8
+Fence Hit! Fences Remaining: 7
+Fence Hit! Fences Remaining: 6
+Fence Hit! Fences Remaining: 5
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3
+Fence Hit! Fences Remaining: 2
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	1857
+GPS points skipped:	120671
+Total number of GPS points:	122528
+Total number of fences:	20
+Unhit fences:	2
+Accuracy:	90.0%
+Efficiency:	98.48442804909898%
+
+Requests from database: 	5775
+Requests from API: 	116753
+
+Execution Time:	0 Days 0 Hours 26 Minutes 15 Seconds 688 Milliseconds
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	0
+GPS points skipped:	0
+Total number of GPS points:	0
+Total number of fences:	0
+Unhit fences:	0
+Accuracy:	NaN%
+Efficiency:	NaN%
+
+Requests from database: 	0
+Requests from API: 	0
+
+Execution Time:	0 Days 0 Hours 26 Minutes 15 Seconds 688 Milliseconds

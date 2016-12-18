@@ -1,0 +1,99 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_07.txt
+[Coordinate[47.64428, -122.3532], Coordinate[47.68265, -122.33227], Coordinate[47.88247, -122.25718], Coordinate[47.65398, -122.33542], Coordinate[47.62037, -122.20163], Coordinate[48.10237, -122.16667], Coordinate[47.65458, -122.32255], Coordinate[47.62118, -122.2017], Coordinate[47.87687, -122.23968], Coordinate[47.64437, -122.30477], Coordinate[47.619, -122.20275], Coordinate[47.68237, -122.31698], Coordinate[47.63683, -122.23563], Coordinate[47.66147, -122.34742], Coordinate[47.64297, -122.20057], Coordinate[47.63827, -122.24605], Coordinate[47.67855, -122.32045], Coordinate[47.64163, -122.2141], Coordinate[47.88082, -122.24003], Coordinate[47.67683, -122.32035], Coordinate[47.67698, -122.32337], Coordinate[47.67562, -122.35458], Coordinate[47.69055, -122.3442], Coordinate[47.70432, -122.34475], Coordinate[47.63977, -122.20123], Coordinate[47.61182, -122.33428], Coordinate[47.61627, -122.20173], Coordinate[47.65212, -122.35272], Coordinate[47.61717, -122.20043], Coordinate[47.6372, -122.23835], Coordinate[47.67508, -122.31763], Coordinate[47.68505, -122.32443], Coordinate[47.54842, -122.31147], Coordinate[47.61178, -122.33292], Coordinate[47.70508, -122.34278], Coordinate[47.90513, -122.21142], Coordinate[47.6873, -122.34457], Coordinate[47.68373, -122.33438], Coordinate[47.61187, -122.20118], Coordinate[47.67403, -122.34588], Coordinate[47.61465, -122.19892], Coordinate[47.88157, -122.23213], Coordinate[47.63962, -122.25452], Coordinate[47.70957, -122.32348], Coordinate[47.63182, -122.2016], Coordinate[47.66622, -122.32235], Coordinate[47.46223, -122.26788], Coordinate[47.6403, -122.25858], Coordinate[47.64218, -122.27122], Coordinate[47.63588, -122.22737], Coordinate[47.63672, -122.23453], Coordinate[47.73293, -122.32428], Coordinate[47.68843, -122.32863], Coordinate[47.64377, -122.30685], Coordinate[47.6365, -122.23292], Coordinate[47.88483, -122.22927], Coordinate[47.64472, -122.28637], Coordinate[47.75152, -122.18708], Coordinate[47.64085, -122.2163], Coordinate[47.64268, -122.32202], Coordinate[47.63875, -122.22132], Coordinate[47.63593, -122.22892], Coordinate[47.61897, -122.35435], Coordinate[47.63642, -122.2251], Coordinate[47.882, -122.23835], Coordinate[47.68107, -122.32117], Coordinate[47.62568, -122.20153], Coordinate[47.69058, -122.34198], Coordinate[47.61568, -122.2026], Coordinate[47.61772, -122.20105]]
+Fence Hit! Fences Remaining: 69
+Fence Hit! Fences Remaining: 68
+Fence Hit! Fences Remaining: 67
+Fence Hit! Fences Remaining: 66
+Fence Hit! Fences Remaining: 65
+Fence Hit! Fences Remaining: 64
+Fence Hit! Fences Remaining: 63
+Fence Hit! Fences Remaining: 62
+Fence Hit! Fences Remaining: 61
+Fence Hit! Fences Remaining: 60
+Fence Hit! Fences Remaining: 59
+Fence Hit! Fences Remaining: 58
+Fence Hit! Fences Remaining: 57
+Fence Hit! Fences Remaining: 56
+Fence Hit! Fences Remaining: 55
+Fence Hit! Fences Remaining: 54
+Fence Hit! Fences Remaining: 53
+Fence Hit! Fences Remaining: 52
+Fence Hit! Fences Remaining: 51
+Fence Hit! Fences Remaining: 50
+Fence Hit! Fences Remaining: 49
+Fence Hit! Fences Remaining: 48
+Fence Hit! Fences Remaining: 47
+Fence Hit! Fences Remaining: 46
+Fence Hit! Fences Remaining: 45
+Fence Hit! Fences Remaining: 44
+Fence Hit! Fences Remaining: 43
+Fence Hit! Fences Remaining: 42
+Fence Hit! Fences Remaining: 41
+Fence Hit! Fences Remaining: 40
+Fence Hit! Fences Remaining: 39
+Fence Hit! Fences Remaining: 38
+Fence Hit! Fences Remaining: 37
+Fence Hit! Fences Remaining: 36
+Fence Hit! Fences Remaining: 35
+Fence Hit! Fences Remaining: 34
+Fence Hit! Fences Remaining: 33
+Fence Hit! Fences Remaining: 32
+Fence Hit! Fences Remaining: 31
+Fence Hit! Fences Remaining: 30
+Fence Hit! Fences Remaining: 29
+Fence Hit! Fences Remaining: 28
+Fence Hit! Fences Remaining: 27
+Fence Hit! Fences Remaining: 26
+Fence Hit! Fences Remaining: 25
+Fence Hit! Fences Remaining: 24
+Fence Hit! Fences Remaining: 23
+Fence Hit! Fences Remaining: 22
+Fence Hit! Fences Remaining: 21
+Fence Hit! Fences Remaining: 20
+Fence Hit! Fences Remaining: 19
+Fence Hit! Fences Remaining: 18
+Fence Hit! Fences Remaining: 17
+Fence Hit! Fences Remaining: 16
+Fence Hit! Fences Remaining: 15
+Fence Hit! Fences Remaining: 14
+Fence Hit! Fences Remaining: 13
+Fence Hit! Fences Remaining: 12
+Fence Hit! Fences Remaining: 11
+Fence Hit! Fences Remaining: 10
+Fence Hit! Fences Remaining: 9
+Fence Hit! Fences Remaining: 8
+Fence Hit! Fences Remaining: 7
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	890
+GPS points skipped:	34237
+Total number of GPS points:	35127
+Total number of fences:	70
+Unhit fences:	7
+Accuracy:	90.0%
+Efficiency:	97.4663364363595%
+
+Requests from database: 	2456
+Requests from API: 	32671
+
+Execution Time:	0 Days 0 Hours 4 Minutes 47 Seconds 993 Milliseconds
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	0
+GPS points skipped:	0
+Total number of GPS points:	0
+Total number of fences:	0
+Unhit fences:	0
+Accuracy:	NaN%
+Efficiency:	NaN%
+
+Requests from database: 	0
+Requests from API: 	0
+
+Execution Time:	0 Days 0 Hours 4 Minutes 47 Seconds 993 Milliseconds

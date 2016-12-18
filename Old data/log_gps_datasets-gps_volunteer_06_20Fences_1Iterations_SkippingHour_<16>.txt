@@ -1,0 +1,56 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_06.txt
+[Coordinate[47.59528, -122.32952], Coordinate[47.60923, -122.33605], Coordinate[47.64527, -122.38298], Coordinate[47.59515, -122.3306], Coordinate[47.69288, -122.37627], Coordinate[47.63927, -122.3985], Coordinate[47.71058, -122.36082], Coordinate[47.72418, -122.33008], Coordinate[47.7202, -122.3568], Coordinate[47.61543, -122.20387], Coordinate[47.60378, -122.33393], Coordinate[47.72502, -122.32867], Coordinate[47.60962, -122.33842], Coordinate[47.67613, -122.37668], Coordinate[47.60512, -122.3351], Coordinate[47.60785, -122.34177], Coordinate[47.61752, -122.20422], Coordinate[47.60502, -122.30128], Coordinate[47.64053, -122.39845], Coordinate[47.59537, -122.33288]]
+Fence Hit! Fences Remaining: 19
+Fence Hit! Fences Remaining: 18
+Fence Hit! Fences Remaining: 17
+Fence Hit! Fences Remaining: 16
+Fence Hit! Fences Remaining: 15
+Fence Hit! Fences Remaining: 14
+Fence Hit! Fences Remaining: 13
+Fence Hit! Fences Remaining: 12
+Fence Hit! Fences Remaining: 11
+Fence Hit! Fences Remaining: 10
+Fence Hit! Fences Remaining: 9
+Fence Hit! Fences Remaining: 8
+Fence Hit! Fences Remaining: 7
+Fence Hit! Fences Remaining: 6
+Fence Hit! Fences Remaining: 5
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3
+Fence Hit! Fences Remaining: 2
+Fence Hit! Fences Remaining: 1
+Fence Hit! Fences Remaining: 0
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	590
+GPS points skipped:	25499
+Total number of GPS points:	26089
+Total number of fences:	20
+Unhit fences:	0
+Accuracy:	100.0%
+Efficiency:	97.73851048334546%
+
+Requests from database: 	5614
+Requests from API: 	20475
+
+Execution Time:	0 Days 0 Hours 0 Minutes 36 Seconds 351 Milliseconds
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	0
+GPS points skipped:	0
+Total number of GPS points:	0
+Total number of fences:	0
+Unhit fences:	0
+Accuracy:	NaN%
+Efficiency:	NaN%
+
+Requests from database: 	0
+Requests from API: 	0
+
+Execution Time:	0 Days 0 Hours 0 Minutes 36 Seconds 351 Milliseconds

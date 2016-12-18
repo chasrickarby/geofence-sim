@@ -1,0 +1,3 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+EVERY Nth Point: 0
+[Coordinate[47.63812, -122.32605], Coordinate[47.61723, -122.32097], Coordinate[47.61537, -122.31817], Coordinate[47.61937, -122.33307], Coordinate[47.62352, -122.32893]]

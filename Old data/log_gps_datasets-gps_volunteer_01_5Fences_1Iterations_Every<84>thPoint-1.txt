@@ -1,0 +1,5 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+EVERY Nth Point: 84
+[Coordinate[47.61757, -122.32335], Coordinate[47.6268, -122.32923], Coordinate[47.61763, -122.3211], Coordinate[47.63, -122.32917], Coordinate[47.64137, -122.32575]]
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3

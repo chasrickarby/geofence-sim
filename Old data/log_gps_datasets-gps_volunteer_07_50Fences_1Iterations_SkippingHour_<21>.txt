@@ -1,0 +1,86 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_07.txt
+[Coordinate[47.88242, -122.25727], Coordinate[47.61727, -122.19905], Coordinate[47.65395, -122.3354], Coordinate[47.66638, -122.32175], Coordinate[47.61903, -122.35433], Coordinate[47.69048, -122.33558], Coordinate[47.61447, -122.19912], Coordinate[47.89038, -122.22335], Coordinate[47.99073, -122.18272], Coordinate[47.64268, -122.20042], Coordinate[47.61757, -122.20115], Coordinate[47.69057, -122.34307], Coordinate[47.61438, -122.20147], Coordinate[47.8586, -122.25085], Coordinate[47.67563, -122.3545], Coordinate[47.643, -122.31575], Coordinate[47.6787, -122.32042], Coordinate[48.1025, -122.16668], Coordinate[47.66212, -122.29853], Coordinate[47.65215, -122.35277], Coordinate[47.74057, -122.32883], Coordinate[47.6155, -122.20008], Coordinate[47.6388, -122.20163], Coordinate[47.66387, -122.2978], Coordinate[47.68293, -122.32145], Coordinate[47.6752, -122.31757], Coordinate[47.69053, -122.33992], Coordinate[47.94212, -122.19728], Coordinate[47.6362, -122.2315], Coordinate[47.67433, -122.3174], Coordinate[47.6826, -122.3173], Coordinate[47.67363, -122.31738], Coordinate[47.6183, -122.20165], Coordinate[47.71708, -122.18693], Coordinate[47.66232, -122.3474], Coordinate[47.80068, -122.314], Coordinate[47.66137, -122.31995], Coordinate[47.64485, -122.28968], Coordinate[47.63588, -122.22737], Coordinate[47.6446, -122.35278], Coordinate[47.63975, -122.25463], Coordinate[47.61197, -122.20122], Coordinate[47.73515, -122.32507], Coordinate[47.6871, -122.3275], Coordinate[47.64308, -122.31267], Coordinate[47.701, -122.3446], Coordinate[47.68202, -122.32148], Coordinate[47.45312, -122.30038], Coordinate[47.88092, -122.23397], Coordinate[47.68948, -122.34458]]
+Fence Hit! Fences Remaining: 49
+Fence Hit! Fences Remaining: 48
+Fence Hit! Fences Remaining: 47
+Fence Hit! Fences Remaining: 46
+Fence Hit! Fences Remaining: 45
+Fence Hit! Fences Remaining: 44
+Fence Hit! Fences Remaining: 43
+Fence Hit! Fences Remaining: 42
+Fence Hit! Fences Remaining: 41
+Fence Hit! Fences Remaining: 40
+Fence Hit! Fences Remaining: 39
+Fence Hit! Fences Remaining: 38
+Fence Hit! Fences Remaining: 37
+Fence Hit! Fences Remaining: 36
+Fence Hit! Fences Remaining: 35
+Fence Hit! Fences Remaining: 34
+Fence Hit! Fences Remaining: 33
+Fence Hit! Fences Remaining: 32
+Fence Hit! Fences Remaining: 31
+Fence Hit! Fences Remaining: 30
+Fence Hit! Fences Remaining: 29
+Fence Hit! Fences Remaining: 28
+Fence Hit! Fences Remaining: 27
+Fence Hit! Fences Remaining: 26
+Fence Hit! Fences Remaining: 25
+Fence Hit! Fences Remaining: 24
+Fence Hit! Fences Remaining: 23
+Fence Hit! Fences Remaining: 22
+Fence Hit! Fences Remaining: 21
+Fence Hit! Fences Remaining: 20
+Fence Hit! Fences Remaining: 19
+Fence Hit! Fences Remaining: 18
+Fence Hit! Fences Remaining: 17
+Fence Hit! Fences Remaining: 16
+Fence Hit! Fences Remaining: 15
+Fence Hit! Fences Remaining: 14
+Fence Hit! Fences Remaining: 13
+Fence Hit! Fences Remaining: 12
+Fence Hit! Fences Remaining: 11
+Fence Hit! Fences Remaining: 10
+Fence Hit! Fences Remaining: 9
+Fence Hit! Fences Remaining: 8
+Fence Hit! Fences Remaining: 7
+Fence Hit! Fences Remaining: 6
+Fence Hit! Fences Remaining: 5
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3
+Fence Hit! Fences Remaining: 2
+Fence Hit! Fences Remaining: 1
+Fence Hit! Fences Remaining: 0
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	50
+GPS points skipped:	0
+Total number of GPS points:	50
+Total number of fences:	50
+Unhit fences:	0
+Accuracy:	100.0%
+Efficiency:	0.0%
+
+Requests from database: 	0
+Requests from API: 	50
+
+Execution Time:	0 Days 0 Hours 5 Minutes 6 Seconds 781 Milliseconds
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	0
+GPS points skipped:	0
+Total number of GPS points:	0
+Total number of fences:	0
+Unhit fences:	0
+Accuracy:	NaN%
+Efficiency:	NaN%
+
+Requests from database: 	0
+Requests from API: 	0
+
+Execution Time:	0 Days 0 Hours 5 Minutes 6 Seconds 781 Milliseconds

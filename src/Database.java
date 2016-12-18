@@ -3,7 +3,9 @@
  */
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
+import java.math.RoundingMode;
 import java.sql.*;
+import java.text.DecimalFormat;
 
 public class Database
 {
@@ -69,6 +71,25 @@ public class Database
         int travelTime = -1;
         String sql = "SELECT * FROM " + curTable + " WHERE (locStartLat=" + start.getLat() + " AND locStartLon=" + start.getLon() + " AND locEndLat=" + end.getLat() + " AND locEndLon=" + end.getLon() + ") OR " +
                 "(locStartLat=" + end.getLat() + " AND locStartLon=" + end.getLon() + " AND locEndLat=" + start.getLat() + " AND locEndLon=" + start.getLon() + ")";
+        rs = stmt.executeQuery(sql);
+        while (rs.next()) {
+            travelTime = rs.getInt(5);
+        }
+        return travelTime;
+    }
+
+    // only going to the 4th decimal place results in 11m margin of error
+    public int executeTravelTimeQueryRemovePrecision(Coordinate start, Coordinate end) throws SQLException {
+
+        DecimalFormat df = new DecimalFormat("#.####");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        Statement stmt = c.createStatement();
+        ResultSet rs = null; // result set object
+        int travelTime = -1;
+        String startLat = df.format(start.getLat());
+        String sql = "SELECT * FROM " + curTable + " WHERE (locStartLat=" + df.format(start.getLat()) + " AND locStartLon=" + df.format(start.getLon()) + " AND locEndLat=" + df.format(end.getLat()) + " AND locEndLon=" + df.format(end.getLon()) + ") OR " +
+                "(locStartLat=" + df.format(end.getLat()) + " AND locStartLon=" + df.format(end.getLon()) + " AND locEndLat=" + df.format(start.getLat()) + " AND locEndLon=" + df.format(start.getLon()) + ")";
         rs = stmt.executeQuery(sql);
         while (rs.next()) {
             travelTime = rs.getInt(5);

@@ -1,0 +1,53 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_07.txt
+[Coordinate[47.6896, -122.32937], Coordinate[47.88242, -122.25712], Coordinate[47.68712, -122.34458], Coordinate[47.69048, -122.33557], Coordinate[47.69053, -122.33392], Coordinate[47.64465, -122.28677], Coordinate[47.67572, -122.35443], Coordinate[47.6618, -122.2982], Coordinate[48.1025, -122.16657], Coordinate[47.64315, -122.20822], Coordinate[47.70912, -122.3247], Coordinate[47.92227, -122.20485], Coordinate[47.70075, -122.34473], Coordinate[47.68585, -122.3247], Coordinate[47.67625, -122.32278], Coordinate[47.68228, -122.31717], Coordinate[47.61618, -122.20227], Coordinate[47.63197, -122.21783], Coordinate[47.65402, -122.33548], Coordinate[47.70735, -122.34463]]
+Fence Hit! Fences Remaining: 19
+Fence Hit! Fences Remaining: 18
+Fence Hit! Fences Remaining: 17
+Fence Hit! Fences Remaining: 16
+Fence Hit! Fences Remaining: 15
+Fence Hit! Fences Remaining: 14
+Fence Hit! Fences Remaining: 13
+Fence Hit! Fences Remaining: 12
+Fence Hit! Fences Remaining: 11
+Fence Hit! Fences Remaining: 10
+Fence Hit! Fences Remaining: 9
+Fence Hit! Fences Remaining: 8
+Fence Hit! Fences Remaining: 7
+Fence Hit! Fences Remaining: 6
+Fence Hit! Fences Remaining: 5
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	518
+GPS points skipped:	34609
+Total number of GPS points:	35127
+Total number of fences:	20
+Unhit fences:	3
+Accuracy:	85.0%
+Efficiency:	98.52535086970137%
+
+Requests from database: 	1169
+Requests from API: 	33958
+
+Execution Time:	0 Days 0 Hours 4 Minutes 47 Seconds 993 Milliseconds
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	0
+GPS points skipped:	0
+Total number of GPS points:	0
+Total number of fences:	0
+Unhit fences:	0
+Accuracy:	NaN%
+Efficiency:	NaN%
+
+Requests from database: 	0
+Requests from API: 	0
+
+Execution Time:	0 Days 0 Hours 4 Minutes 47 Seconds 993 Milliseconds

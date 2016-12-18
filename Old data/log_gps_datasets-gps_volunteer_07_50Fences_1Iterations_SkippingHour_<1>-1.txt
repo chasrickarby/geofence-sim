@@ -1,0 +1,31 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_07.txt
+[Coordinate[47.8825, -122.2573], Coordinate[47.88175, -122.25778], Coordinate[47.68282, -122.32197], Coordinate[47.69057, -122.33703], Coordinate[47.64213, -122.21257], Coordinate[47.882, -122.2277], Coordinate[47.70752, -122.34453], Coordinate[47.75482, -122.3298], Coordinate[47.64278, -122.20042], Coordinate[48.10238, -122.1668], Coordinate[47.65407, -122.33548], Coordinate[47.61828, -122.20125], Coordinate[47.65598, -122.3225], Coordinate[47.6906, -122.33217], Coordinate[47.63867, -122.24738], Coordinate[47.63598, -122.22822], Coordinate[47.88185, -122.23995], Coordinate[47.66298, -122.32173], Coordinate[47.6378, -122.2419], Coordinate[47.6173, -122.20088], Coordinate[47.95108, -122.1997], Coordinate[47.62353, -122.20157], Coordinate[47.6867, -122.32563], Coordinate[47.65037, -122.32253], Coordinate[47.8677, -122.24553], Coordinate[47.64342, -122.27755], Coordinate[47.63787, -122.2228], Coordinate[47.67555, -122.32108], Coordinate[47.64668, -122.32283], Coordinate[47.69055, -122.3442], Coordinate[47.6407, -122.21723], Coordinate[47.64422, -122.35342], Coordinate[47.66047, -122.322], Coordinate[47.64503, -122.29757], Coordinate[47.6655, -122.32172], Coordinate[47.65523, -122.3225], Coordinate[47.64272, -122.27448], Coordinate[47.61613, -122.20192], Coordinate[47.63655, -122.2335], Coordinate[47.68252, -122.31735], Coordinate[47.68587, -122.33545], Coordinate[47.72123, -122.18923], Coordinate[47.67518, -122.31755], Coordinate[47.67565, -122.3546], Coordinate[47.66028, -122.29882], Coordinate[47.61908, -122.20167], Coordinate[47.61457, -122.20148], Coordinate[47.64738, -122.32245], Coordinate[47.6176, -122.19898], Coordinate[47.619, -122.35455]]
+Fence Hit! Fences Remaining: 49
+Fence Hit! Fences Remaining: 48
+Fence Hit! Fences Remaining: 47
+Fence Hit! Fences Remaining: 46
+Fence Hit! Fences Remaining: 45
+Fence Hit! Fences Remaining: 44
+Fence Hit! Fences Remaining: 43
+Fence Hit! Fences Remaining: 42
+Fence Hit! Fences Remaining: 41
+Fence Hit! Fences Remaining: 40
+Fence Hit! Fences Remaining: 39
+Fence Hit! Fences Remaining: 38
+Fence Hit! Fences Remaining: 37
+Fence Hit! Fences Remaining: 36
+Fence Hit! Fences Remaining: 35
+Fence Hit! Fences Remaining: 34
+Fence Hit! Fences Remaining: 33
+Fence Hit! Fences Remaining: 32
+Fence Hit! Fences Remaining: 31
+Fence Hit! Fences Remaining: 30
+Fence Hit! Fences Remaining: 29
+Fence Hit! Fences Remaining: 28
+Fence Hit! Fences Remaining: 27
+Fence Hit! Fences Remaining: 26
+Fence Hit! Fences Remaining: 25
+Fence Hit! Fences Remaining: 24
+Fence Hit! Fences Remaining: 23
+Fence Hit! Fences Remaining: 22
+Fence Hit! Fences Remaining: 21

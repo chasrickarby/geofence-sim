@@ -60,6 +60,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     private static String cliLog;
     private static ArrayList<Coordinate> cliFenceLocations;
     private static DataSet datasetCli;
+    private static int hourToBeOff = 0;
 
     private static Database db;
 
@@ -169,7 +170,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
                     "?wp.0=" + start.getLat() + "," + start.getLon() +
                     "&wp.1=" + end.getLat() + "," + end.getLon() +
                     "&ra=routeSummariesOnly" +
-                    "&key=AlSHOWTOgbz4W37Rb0tBwp_iu1et9WTnTEmHJ6_AWsO33U1L8M3I-wbdrhnsJHk7");
+                    "&key=Aln7HxsQphHfQ8QNJcBgaYYEXvyrvTOe_ro5uicnxv9MMaHu4lFat24EevC0pFvZ"); //chas.rickarby.8.3
 
             HttpResponse httpResponse = httpclient.execute(getRequest);
             HttpEntity entity = httpResponse.getEntity();
@@ -196,9 +197,10 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
     }
 
     private static int QueryFromDataBase(Coordinate start, Coordinate end) {
-        int travelTime = 0;
+        int travelTime = -1;
         try {
             travelTime = db.executeTravelTimeQuery(start, end);
+            //travelTime = db.executeTravelTimeQueryRemovePrecision(start, end);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -271,11 +273,18 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
                 openFileDlg.setFileFilter(filter);
 
+                db = new Database();
+
                 if (openFileDlg.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                     File file = openFileDlg.getSelectedFile();
                     //This is where a real application would open the file.
                     System.out.println("Opening: " + file.getAbsolutePath() + ".");
                     plotPoints(file.getAbsolutePath());
+                    try {
+                        db.dbOpenTable(file.getName());
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
                     plotFirstPoint();
                 } else {
                     System.out.println("Open command cancelled by user.");
@@ -439,7 +448,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
 
                             return;
                         }else if (args[2].equals("ascendfences")){
-                            for (int n = 100; n <= 100; n+=5){
+                            for (int n = 75; n <= 100; n+=5){
                                 cliNumberFences = n;
                                 if(!args[3].contains(".txt"))
                                 {
@@ -481,6 +490,61 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
                             }
 
                             return;
+                        }else if(args[2].equals("24hrtest")){
+
+                            ArrayList<Coordinate> useOnlyTheseFences = new ArrayList<>();
+                            cliNumberFences = 50;
+
+                            for (int n = 1; n <= 24; n++){
+                                hourToBeOff = n;
+                                if(!args[3].contains(".txt"))
+                                {
+                                    cliLog = args[3] + "_" + args[0] + "_" + cliNumberFences + "Fences_" + cliNumberIterations + "Iterations_SkippingHour_<" + hourToBeOff + ">.txt";
+                                }else{
+                                    cliLog = args[3].replace(".txt", "");
+                                    String fileName = args[0].replace(".txt", "");
+                                    fileName = fileName.replace("/", "-");
+                                    cliLog = cliLog + "_" + fileName + "_" + cliNumberFences + "Fences_" + cliNumberIterations + "Iterations_SkippingHour_<" + hourToBeOff + ">.txt";
+                                }
+
+                                File logFile = new File(cliLog);
+
+                                String baseName = FilenameUtils.getBaseName( logFile.getName() );
+                                String extension = FilenameUtils.getExtension( logFile.getName() );
+                                int counter = 1;
+                                while(logFile.exists())
+                                {
+                                    logFile = new File( logFile.getParent(), baseName + "-" + (counter++) + "." + extension );
+                                }
+                                cliLog = logFile.getName();
+
+                                System.setOut(new PrintStream(cliLog));
+
+                                File f = new File(args[0]);
+
+                                if(cliNumberIterations > 1){
+                                    batchProcessing = true;
+                                }
+
+                                for (int i = 0; i < cliNumberIterations; i++){
+                                    System.out.println(f.getAbsolutePath());
+                                    datasetCli = new DataSet(f.getAbsolutePath());
+
+                                    if(n==1){
+                                        cliCreateFences(cliNumberFences);
+                                        useOnlyTheseFences = new ArrayList<Coordinate>(cliFenceLocations);
+                                        totalNumberFences = cliFenceLocations.size();
+                                    }else{
+                                        cliFenceLocations = new ArrayList<Coordinate>(useOnlyTheseFences);
+                                        totalNumberFences = cliFenceLocations.size();
+                                    }
+
+                                    db.dbOpenTable(f.getName());
+
+                                    runCLI(cliNumberFences);
+                                }
+                                printResults();
+                            }
                         }else{
                             return;
                         }
@@ -587,7 +651,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
 
     private static void runCLI(int numFences) throws FileNotFoundException {
 
-        if(cliFenceLocations.size() == 0){
+        if(cliFenceLocations == null || cliFenceLocations.size() == 0){
             cliCreateFences(numFences);
         }
 
@@ -754,7 +818,7 @@ public class Simulator extends JFrame implements JMapViewerEventListener {
         LocalDateTime newTime = LocalDateTime.from(loc.time.plusSeconds(routedTime - marginOfError));
 
         try{
-            while(datasetCli.data.get(index).time.isBefore(newTime)){
+            while(datasetCli.data.get(index).time.isBefore(newTime) || datasetCli.data.get(index).time.getHour() == hourToBeOff){
                 loc = datasetCli.data.get(index);
                 unrequestedPoints++;
                 datasetCli.data.remove(index);

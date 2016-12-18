@@ -1,0 +1,41 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_06.txt
+[Coordinate[47.5949, -122.3327], Coordinate[47.5952, -122.33128], Coordinate[47.63353, -122.38737], Coordinate[47.60623, -122.33755], Coordinate[47.72047, -122.35573]]
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3
+Fence Hit! Fences Remaining: 2
+Fence Hit! Fences Remaining: 1
+Fence Hit! Fences Remaining: 0
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	269
+GPS points skipped:	10793
+Total number of GPS points:	11062
+Total number of fences:	5
+Unhit fences:	0
+Accuracy:	100.0%
+Efficiency:	97.56825167239197%
+
+Requests from database: 	560
+Requests from API: 	10502
+
+Execution Time:	0 Days 0 Hours 1 Minutes 34 Seconds 790 Milliseconds
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	0
+GPS points skipped:	0
+Total number of GPS points:	0
+Total number of fences:	0
+Unhit fences:	0
+Accuracy:	NaN%
+Efficiency:	NaN%
+
+Requests from database: 	0
+Requests from API: 	0
+
+Execution Time:	0 Days 0 Hours 1 Minutes 34 Seconds 790 Milliseconds

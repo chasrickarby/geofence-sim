@@ -1,0 +1,86 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_07.txt
+[Coordinate[47.61632, -122.32912], Coordinate[47.63413, -122.2017], Coordinate[47.88205, -122.25047], Coordinate[47.6927, -122.32897], Coordinate[47.64515, -122.2963], Coordinate[47.67365, -122.31742], Coordinate[47.61178, -122.20117], Coordinate[47.88247, -122.25735], Coordinate[47.62403, -122.20172], Coordinate[47.61498, -122.19812], Coordinate[47.63997, -122.25665], Coordinate[47.6894, -122.32923], Coordinate[47.66197, -122.29695], Coordinate[47.61747, -122.2011], Coordinate[47.61973, -122.20172], Coordinate[47.67522, -122.31757], Coordinate[47.65402, -122.33552], Coordinate[47.84923, -122.25805], Coordinate[47.62123, -122.2017], Coordinate[47.84823, -122.25762], Coordinate[47.72385, -122.32413], Coordinate[47.62825, -122.32777], Coordinate[47.65752, -122.34862], Coordinate[47.64282, -122.27513], Coordinate[47.88163, -122.24927], Coordinate[47.63703, -122.2374], Coordinate[47.64318, -122.30953], Coordinate[47.64302, -122.20568], Coordinate[47.6422, -122.27108], Coordinate[47.69062, -122.34332], Coordinate[47.65545, -122.32232], Coordinate[47.64443, -122.3043], Coordinate[48.09982, -122.17003], Coordinate[47.70845, -122.32643], Coordinate[47.61615, -122.20102], Coordinate[47.61752, -122.19995], Coordinate[47.61643, -122.1989], Coordinate[47.6191, -122.20287], Coordinate[48.01905, -122.17503], Coordinate[47.62565, -122.20165], Coordinate[47.64275, -122.32195], Coordinate[47.619, -122.35442], Coordinate[47.63918, -122.20167], Coordinate[48.01998, -122.1751], Coordinate[47.68107, -122.31673], Coordinate[47.63837, -122.24592], Coordinate[47.6804, -122.34802], Coordinate[47.76473, -122.18713], Coordinate[47.67128, -122.32153], Coordinate[47.82277, -122.24935]]
+Fence Hit! Fences Remaining: 49
+Fence Hit! Fences Remaining: 48
+Fence Hit! Fences Remaining: 47
+Fence Hit! Fences Remaining: 46
+Fence Hit! Fences Remaining: 45
+Fence Hit! Fences Remaining: 44
+Fence Hit! Fences Remaining: 43
+Fence Hit! Fences Remaining: 42
+Fence Hit! Fences Remaining: 41
+Fence Hit! Fences Remaining: 40
+Fence Hit! Fences Remaining: 39
+Fence Hit! Fences Remaining: 38
+Fence Hit! Fences Remaining: 37
+Fence Hit! Fences Remaining: 36
+Fence Hit! Fences Remaining: 35
+Fence Hit! Fences Remaining: 34
+Fence Hit! Fences Remaining: 33
+Fence Hit! Fences Remaining: 32
+Fence Hit! Fences Remaining: 31
+Fence Hit! Fences Remaining: 30
+Fence Hit! Fences Remaining: 29
+Fence Hit! Fences Remaining: 28
+Fence Hit! Fences Remaining: 27
+Fence Hit! Fences Remaining: 26
+Fence Hit! Fences Remaining: 25
+Fence Hit! Fences Remaining: 24
+Fence Hit! Fences Remaining: 23
+Fence Hit! Fences Remaining: 22
+Fence Hit! Fences Remaining: 21
+Fence Hit! Fences Remaining: 20
+Fence Hit! Fences Remaining: 19
+Fence Hit! Fences Remaining: 18
+Fence Hit! Fences Remaining: 17
+Fence Hit! Fences Remaining: 16
+Fence Hit! Fences Remaining: 15
+Fence Hit! Fences Remaining: 14
+Fence Hit! Fences Remaining: 13
+Fence Hit! Fences Remaining: 12
+Fence Hit! Fences Remaining: 11
+Fence Hit! Fences Remaining: 10
+Fence Hit! Fences Remaining: 9
+Fence Hit! Fences Remaining: 8
+Fence Hit! Fences Remaining: 7
+Fence Hit! Fences Remaining: 6
+Fence Hit! Fences Remaining: 5
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3
+Fence Hit! Fences Remaining: 2
+Fence Hit! Fences Remaining: 1
+Fence Hit! Fences Remaining: 0
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	50
+GPS points skipped:	0
+Total number of GPS points:	50
+Total number of fences:	50
+Unhit fences:	0
+Accuracy:	100.0%
+Efficiency:	0.0%
+
+Requests from database: 	0
+Requests from API: 	50
+
+Execution Time:	0 Days 0 Hours 4 Minutes 59 Seconds 281 Milliseconds
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	0
+GPS points skipped:	0
+Total number of GPS points:	0
+Total number of fences:	0
+Unhit fences:	0
+Accuracy:	NaN%
+Efficiency:	NaN%
+
+Requests from database: 	0
+Requests from API: 	0
+
+Execution Time:	0 Days 0 Hours 4 Minutes 59 Seconds 281 Milliseconds

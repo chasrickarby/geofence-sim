@@ -1,0 +1,66 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+EVERY Nth Point: 36
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3
+Fence Hit! Fences Remaining: 2
+Fence Hit! Fences Remaining: 1
+Fence Hit! Fences Remaining: 0
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	233
+GPS points skipped:	415
+Total number of GPS points:	648
+Total number of fences:	5
+Unhit fences:	0
+Accuracy:	100.0%
+Efficiency:	64.04320987654322%
+Execution Time:	0 Days 0 Hours 0 Minutes 12 Seconds 629 Milliseconds
+
+
+- - - - - - - - - - - - - Batch results so far - - - - - - - - - - - - -
+
+
+GPS points requested:	625
+GPS points skipped:	1166
+Total number of GPS points:	1791
+Total number of fences:	5
+Unhit fences:	0
+Average Accuracy:	100.0%
+Average Efficiency:	65.1032942490229%
+Total Execution Time:	0 Days 0 Hours 0 Minutes 37 Seconds 736 Milliseconds
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+EVERY Nth Point: 36
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3
+Fence Hit! Fences Remaining: 2
+Fence Hit! Fences Remaining: 1
+Fence Hit! Fences Remaining: 0
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	287
+GPS points skipped:	529
+Total number of GPS points:	816
+Total number of fences:	5
+Unhit fences:	0
+Accuracy:	100.0%
+Efficiency:	64.82843137254902%
+Execution Time:	0 Days 0 Hours 2 Minutes 28 Seconds 148 Milliseconds
+
+
+- - - - - - - - - - - - - Batch results so far - - - - - - - - - - - - -
+
+
+GPS points requested:	912
+GPS points skipped:	1695
+Total number of GPS points:	2607
+Total number of fences:	5
+Unhit fences:	0
+Average Accuracy:	100.0%
+Average Efficiency:	65.01726121979286%
+Total Execution Time:	0 Days 0 Hours 3 Minutes 5 Seconds 884 Milliseconds

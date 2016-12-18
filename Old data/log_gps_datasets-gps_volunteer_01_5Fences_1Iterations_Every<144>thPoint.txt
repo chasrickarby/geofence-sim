@@ -1,0 +1,19 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+EVERY Nth Point: 144
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3
+Fence Hit! Fences Remaining: 2
+Fence Hit! Fences Remaining: 1
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	189
+GPS points skipped:	192
+Total number of GPS points:	381
+Total number of fences:	5
+Unhit fences:	1
+Accuracy:	80.0%
+Efficiency:	50.39370078740157%
+Execution Time:	0 Days 0 Hours 0 Minutes 12 Seconds 251 Milliseconds

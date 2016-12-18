@@ -1,1 +1,0 @@
-/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt

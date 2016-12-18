@@ -1,0 +1,86 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_01.txt
+[Coordinate[47.61633, -122.32082], Coordinate[47.61875, -122.32108], Coordinate[47.61735, -122.3217], Coordinate[47.61753, -122.32043], Coordinate[47.61932, -122.33317], Coordinate[47.63805, -122.3261], Coordinate[47.61928, -122.32957], Coordinate[47.6223, -122.32925], Coordinate[47.63312, -122.32438], Coordinate[47.61848, -122.32673], Coordinate[47.62853, -122.32755], Coordinate[47.62578, -122.33445], Coordinate[47.61463, -122.31833], Coordinate[47.62492, -122.32812], Coordinate[47.61578, -122.32145], Coordinate[47.63297, -122.3259], Coordinate[47.61843, -122.3253], Coordinate[47.6229, -122.32098], Coordinate[47.62085, -122.33265], Coordinate[47.62387, -122.33432], Coordinate[47.62507, -122.32045], Coordinate[47.62315, -122.3311], Coordinate[47.62085, -122.32098], Coordinate[47.64077, -122.32568], Coordinate[47.62977, -122.32938], Coordinate[47.6366, -122.32587], Coordinate[47.61852, -122.32218], Coordinate[47.62523, -122.32917], Coordinate[47.64002, -122.32585], Coordinate[47.62005, -122.32087], Coordinate[47.63942, -122.3201], Coordinate[47.61523, -122.31985], Coordinate[47.62798, -122.32872], Coordinate[47.61863, -122.33042], Coordinate[47.6371, -122.32015], Coordinate[47.61913, -122.33427], Coordinate[47.62798, -122.32033], Coordinate[47.6178, -122.3225], Coordinate[47.61847, -122.32393], Coordinate[47.63068, -122.3276], Coordinate[47.64115, -122.32348], Coordinate[47.62135, -122.3289], Coordinate[47.62215, -122.32083], Coordinate[47.61683, -122.32238], Coordinate[47.63495, -122.32535], Coordinate[47.64022, -122.31998], Coordinate[47.62652, -122.32015], Coordinate[47.63347, -122.31997], Coordinate[47.62432, -122.32098], Coordinate[47.61652, -122.3235]]
+Fence Hit! Fences Remaining: 49
+Fence Hit! Fences Remaining: 48
+Fence Hit! Fences Remaining: 47
+Fence Hit! Fences Remaining: 46
+Fence Hit! Fences Remaining: 45
+Fence Hit! Fences Remaining: 44
+Fence Hit! Fences Remaining: 43
+Fence Hit! Fences Remaining: 42
+Fence Hit! Fences Remaining: 41
+Fence Hit! Fences Remaining: 40
+Fence Hit! Fences Remaining: 39
+Fence Hit! Fences Remaining: 38
+Fence Hit! Fences Remaining: 37
+Fence Hit! Fences Remaining: 36
+Fence Hit! Fences Remaining: 35
+Fence Hit! Fences Remaining: 34
+Fence Hit! Fences Remaining: 33
+Fence Hit! Fences Remaining: 32
+Fence Hit! Fences Remaining: 31
+Fence Hit! Fences Remaining: 30
+Fence Hit! Fences Remaining: 29
+Fence Hit! Fences Remaining: 28
+Fence Hit! Fences Remaining: 27
+Fence Hit! Fences Remaining: 26
+Fence Hit! Fences Remaining: 25
+Fence Hit! Fences Remaining: 24
+Fence Hit! Fences Remaining: 23
+Fence Hit! Fences Remaining: 22
+Fence Hit! Fences Remaining: 21
+Fence Hit! Fences Remaining: 20
+Fence Hit! Fences Remaining: 19
+Fence Hit! Fences Remaining: 18
+Fence Hit! Fences Remaining: 17
+Fence Hit! Fences Remaining: 16
+Fence Hit! Fences Remaining: 15
+Fence Hit! Fences Remaining: 14
+Fence Hit! Fences Remaining: 13
+Fence Hit! Fences Remaining: 12
+Fence Hit! Fences Remaining: 11
+Fence Hit! Fences Remaining: 10
+Fence Hit! Fences Remaining: 9
+Fence Hit! Fences Remaining: 8
+Fence Hit! Fences Remaining: 7
+Fence Hit! Fences Remaining: 6
+Fence Hit! Fences Remaining: 5
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3
+Fence Hit! Fences Remaining: 2
+Fence Hit! Fences Remaining: 1
+Fence Hit! Fences Remaining: 0
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	349
+GPS points skipped:	5667
+Total number of GPS points:	6016
+Total number of fences:	50
+Unhit fences:	0
+Accuracy:	100.0%
+Efficiency:	94.19880319148936%
+
+Requests from database: 	6365
+Requests from API: 	-349
+
+Execution Time:	0 Days 0 Hours 4 Minutes 56 Seconds 98 Milliseconds
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	0
+GPS points skipped:	0
+Total number of GPS points:	0
+Total number of fences:	0
+Unhit fences:	0
+Accuracy:	NaN%
+Efficiency:	NaN%
+
+Requests from database: 	0
+Requests from API: 	0
+
+Execution Time:	0 Days 0 Hours 4 Minutes 56 Seconds 98 Milliseconds

@@ -1,0 +1,2 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_06.txt
+[Coordinate[47.72503, -122.32858], Coordinate[47.55397, -122.35425], Coordinate[47.72027, -122.35693], Coordinate[47.63898, -122.39793], Coordinate[47.59762, -122.33168]]

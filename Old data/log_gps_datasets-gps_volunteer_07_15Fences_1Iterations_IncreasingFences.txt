@@ -1,0 +1,51 @@
+/Users/chasrickarby/Development/geofence-sim/gps_datasets/gps_volunteer_07.txt
+[Coordinate[47.63823, -122.24513], Coordinate[47.65407, -122.33545], Coordinate[47.63878, -122.22147], Coordinate[47.88238, -122.25752], Coordinate[47.66335, -122.29792], Coordinate[47.65402, -122.32257], Coordinate[47.61562, -122.20095], Coordinate[47.85125, -122.25692], Coordinate[47.64045, -122.26005], Coordinate[47.6868, -122.34438], Coordinate[47.64427, -122.35298], Coordinate[47.64882, -122.32243], Coordinate[47.69053, -122.33958], Coordinate[47.61732, -122.19997], Coordinate[47.67517, -122.31762]]
+Fence Hit! Fences Remaining: 14
+Fence Hit! Fences Remaining: 13
+Fence Hit! Fences Remaining: 12
+Fence Hit! Fences Remaining: 11
+Fence Hit! Fences Remaining: 10
+Fence Hit! Fences Remaining: 9
+Fence Hit! Fences Remaining: 8
+Fence Hit! Fences Remaining: 7
+Fence Hit! Fences Remaining: 6
+Fence Hit! Fences Remaining: 5
+Fence Hit! Fences Remaining: 4
+Fence Hit! Fences Remaining: 3
+Fence Hit! Fences Remaining: 2
+Fence Hit! Fences Remaining: 1
+Fence Hit! Fences Remaining: 0
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	390
+GPS points skipped:	20645
+Total number of GPS points:	21035
+Total number of fences:	15
+Unhit fences:	0
+Accuracy:	100.0%
+Efficiency:	98.1459472308058%
+
+Requests from database: 	812
+Requests from API: 	20223
+
+Execution Time:	0 Days 0 Hours 4 Minutes 47 Seconds 993 Milliseconds
+
+
+- - - - - - - - - - - - - Results from this run - - - - - - - - - - - - -
+
+
+GPS points requested:	0
+GPS points skipped:	0
+Total number of GPS points:	0
+Total number of fences:	0
+Unhit fences:	0
+Accuracy:	NaN%
+Efficiency:	NaN%
+
+Requests from database: 	0
+Requests from API: 	0
+
+Execution Time:	0 Days 0 Hours 4 Minutes 47 Seconds 993 Milliseconds
